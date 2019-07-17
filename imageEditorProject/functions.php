@@ -1,14 +1,13 @@
 <?php
 
-function castFloatType(string $value):float
+function castIntType(string $value):int
 {
-    return (float) $value;
+    return (int) $value;
 }
 
 function canExecute(array $payload,$option):bool
 {
-    //$image->adaptiveResizeImage(10,10);
-    if(empty($payload[$option]))
+    if(!isset($payload[$option]))
     {
         return false;
     }

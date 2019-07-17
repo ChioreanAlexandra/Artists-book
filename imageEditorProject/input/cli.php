@@ -2,14 +2,7 @@
 
 function readArguments(array $argv):array
 {
-    $payload1=[
-        'input-file'=>'',
-        'output-file'=>'',
-        'width'=>'',
-        'height'=>'',
-        'format'=>'',
-        'help'=>'',
-    ];
+    $payload1=[];
 
     array_shift($argv);
     foreach($argv as $item)

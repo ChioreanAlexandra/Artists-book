@@ -11,12 +11,12 @@ function executeHeight (array $payload):array
     {
         return $payload;
     }
-    $height = castFloatType($payload['height']);
+    $height = castIntType($payload['height']);
 
     /** @var \Imagick $image */
 
     $image = $payload['image'];
-    $image -> adaptiveResizeImage($height,$image->getImageWidth());
+    $image->scaleImage(0,$height);
     $payload['image']=$image;
     return $payload;
 

@@ -8,12 +8,12 @@ function executeWidth (array $payload):array
     {
         return $payload;
     }
-    $width = castFloatType($payload['width']);
+    $width = castIntType($payload['width']);
 
     /** @var \Imagick $image */
 
     $image = $payload['image'];
-    $image -> adaptiveResizeImage($image->getImageHeight(),$width);
+    $image->scaleImage($width,0);
     $payload['image']=$image;
     return $payload;
 
