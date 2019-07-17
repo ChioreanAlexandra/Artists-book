@@ -13,5 +13,4 @@ $payload3=executeWidth($payload2);
 $payload3=executeHeight($payload3);
 $payload4=addWatermark($payload3);
 saveImageToFile($payload3);
-//canExecute($payload2);
-//var_dump($payload2);
+

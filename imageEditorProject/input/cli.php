@@ -10,6 +10,5 @@ function readArguments(array $argv):array
         preg_match('/(?<key>\w+-?\w+)=?(?<value>[\w\/\.:]*)?/',$item,$matches);
         $payload1[$matches['key']]=$matches['value'];
     }
-  //  var_dump($payload1);
     return $payload1;
 }
