@@ -19,6 +19,10 @@ function computeCoordinates(int $widthImage, int $heightImage, $widthWatermark, 
 
 function addWatermark(array $payload): array
 {
+    if(!isset($payload['watermark']))
+    {
+        return $payload;
+    }
     /**@var \Imagick $image
      */
 
