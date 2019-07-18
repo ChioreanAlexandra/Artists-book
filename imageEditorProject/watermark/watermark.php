@@ -1,6 +1,17 @@
 <?php
 const SCALE_VALUE=15;
-function computeCoordinates(int $widthImage, int $heightImage, $widthWatermark, $heightWatermark): array
+
+/**
+ * Compute the coordinates for drawing the watermark image.
+ *
+ * @param int $widthImage
+ * @param int $heightImage
+ * @param $widthWatermark
+ * @param $heightWatermark
+ * @return array
+ */
+
+function computeRandomCoordinates(int $widthImage, int $heightImage, $widthWatermark, $heightWatermark): array
 {
     $newWidth = 0;
     $newHeight = 0;
@@ -14,26 +25,31 @@ function computeCoordinates(int $widthImage, int $heightImage, $widthWatermark, 
     if ($y == 1) {
         $newHeight = $heightImage - $heightWatermark;
     }
-    return ['width' => $newWidth, 'heigth' => $newHeight];
+    return [WIDTH => $newWidth, HEIGHT => $newHeight];
 }
 
+/**
+ * Add and resize the watermark image to a random corner of the image.
+ *
+ * @param array $payload
+ * @return array
+ * @throws ImagickException
+ */
 function addWatermark(array $payload): array
 {
-    if(!isset($payload['watermark']))
+    if(!isset($payload[WATERMARK]))
     {
         return $payload;
     }
-    /**@var \Imagick $image
-     */
+    /**@var \Imagick $image */
 
-    $image = $payload['image'];
-    $watermarkImage = new Imagick($payload['watermark']);
+    $image = $payload[IMAGE];
+    $watermarkImage = new Imagick($payload[WATERMARK]);
     $watermarkImage->scaleImage($image->getImageWidth()/SCALE_VALUE,$image->getImageHeight()/SCALE_VALUE);
-    $coordinates = computeCoordinates($image->getImageWidth(), $image->getImageHeight(), $watermarkImage->getImageWidth(), $watermarkImage->getImageHeight());
-    var_dump($coordinates);
-    $image->compositeImage($watermarkImage, imagick::COMPOSITE_OVER, $coordinates['width'], $coordinates['heigth']);
-    $payload['image'] = $image;
-    unset($payload['watermark']);
+    $coordinates = computeRandomoordinates($image->getImageWidth(), $image->getImageHeight(), $watermarkImage->getImageWidth(), $watermarkImage->getImageHeight());
+    $image->compositeImage($watermarkImage, imagick::COMPOSITE_OVER, $coordinates[WIDTH], $coordinates[HEIGHT]);
+    $payload[IMAGE] = $image;
+    unset($payload[WATERMARK]);
     return $payload;
 
 }

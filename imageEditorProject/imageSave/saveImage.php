@@ -1,10 +1,13 @@
 <?php
-function saveImageToFile(array $payload4)
+/**
+ * @param array $payload4
+ * @return string
+ */
+function saveImageToFile(array $payload4): string
 {
-    $outputFile=array_shift($payload4);
-    $image = $payload4['image'];
-    /**
-     * @var \Imagick $image
-     */
+    $outputFile = $payload4[OUTPUT_FILE];
+    $image = $payload4[IMAGE];
+    /**@var \Imagick $image*/
     $image->writeImage($outputFile);
+    return $outputFile;
 }

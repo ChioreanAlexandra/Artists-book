@@ -1,10 +1,11 @@
 <?php
 
+/**
+ * @param array $payload containing the list of arguments of the command
+ * @return bool
+ */
 function isHelp(array $payload):bool
 {
-    if(isset($payload['help']))
-    {
-        return true;
-    }
-    return false;
+    return isset($payload[HELP]);
+
 }
