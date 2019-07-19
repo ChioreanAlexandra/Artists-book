@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4b4ce21-075c-4c16-b845-005b91a2e93a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/operations/ratio.php" beforeDir="false" afterPath="$PROJECT_DIR$/operations/ratio.php" afterDir="false" />
-    </list>
+    <list default="true" id="b4b4ce21-075c-4c16-b845-005b91a2e93a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,20 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_command_line_tool.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
               <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/operations/ratio.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -96,55 +85,6 @@
           <expand>
             <path>
               <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="error" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="imageLoad" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="imageSave" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="input" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="isHelp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="operations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="validation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="imageEditorProject" type="462c0819:PsiDirectoryNode" />
-              <item name="watermark" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="imageEditorProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
             <path>
@@ -163,7 +103,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="/var/www/artists-book" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -213,16 +153,15 @@
       <workItem from="1563265502218" duration="13892000" />
       <workItem from="1563346921242" duration="20771000" />
       <workItem from="1563431764275" duration="21483000" />
-      <workItem from="1563515779268" duration="53000" />
+      <workItem from="1563515779268" duration="852000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60110000" />
+    <option name="totallyTimeSpent" value="60909000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26065302" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -350,17 +289,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my_command_line_tool.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/operations/ratio.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my_command_line_tool.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
         </state>
       </provider>
     </entry>
