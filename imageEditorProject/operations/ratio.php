@@ -14,11 +14,12 @@ function changeByFormat(array $payload, int $widthRatio, int $heightRatio): arra
     /**@var \Imagick $image */
     $image = $payload[IMAGE];
 
-    if (!isset($payload[WIDTH]) && !isset($payload[HEIGHT]) && $image->getImageHeight() < $image->getImageWidth()) {
-        $image->scaleImage($image->getImageHeight() * $widthRatio / $heightRatio, $image->getImageHeight());
-    } else {
-        $image->scaleImage($image->getImageWidth(), $image->getImageWidth() * $heightRatio / $widthRatio);
-    }
+    if (!isset($payload[WIDTH]) && !isset($payload[HEIGHT]))
+        if ($image->getImageHeight() < $image->getImageWidth()) {
+            $image->scaleImage($image->getImageHeight() * $widthRatio / $heightRatio, $image->getImageHeight());
+        } else {
+            $image->scaleImage($image->getImageWidth(), $image->getImageWidth() * $heightRatio / $widthRatio);
+        }
 
     $payload[IMAGE] = $image;
     return $payload;
@@ -87,7 +88,7 @@ function removeUnnecessaryOperations(array $payload): array
  * @param string $formatValue
  * @return array
  */
-function getFormatRatio(string $formatValue):array
+function getFormatRatio(string $formatValue): array
 {
     $formatArray = explode(':', $formatValue);
     $widthRatio = (int)array_shift($formatArray);
@@ -109,7 +110,7 @@ function executeFormat($payload)
         return $payload;
     }
 
-    list($widthRatio,$heightRatio)=getFormatRatio($payload[FORMAT]);
+    list($widthRatio, $heightRatio) = getFormatRatio($payload[FORMAT]);
 
     if (!isset($payload[WIDTH]) && !isset($payload[HEIGHT])) {
         $payload = changeByFormat($payload, $widthRatio, $heightRatio);

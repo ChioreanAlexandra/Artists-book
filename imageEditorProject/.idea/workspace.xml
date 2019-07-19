@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4b4ce21-075c-4c16-b845-005b91a2e93a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/constants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error/errorFile.php" beforeDir="false" afterPath="$PROJECT_DIR$/error/errorFile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageLoad/loadImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/imageLoad/loadImage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imageSave/saveImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/imageSave/saveImage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input/cli.php" beforeDir="false" afterPath="$PROJECT_DIR$/input/cli.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isHelp/help.php" beforeDir="false" afterPath="$PROJECT_DIR$/isHelp/help.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my_command_line_tool.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_command_line_tool.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/operations/height.php" beforeDir="false" afterPath="$PROJECT_DIR$/operations/height.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/operations/ratio.php" beforeDir="false" afterPath="$PROJECT_DIR$/operations/ratio.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/operations/width.php" beforeDir="false" afterPath="$PROJECT_DIR$/operations/width.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/output.php" beforeDir="false" afterPath="$PROJECT_DIR$/output/output.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/validation/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/validation/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/watermark/watermark.php" beforeDir="false" afterPath="$PROJECT_DIR$/watermark/watermark.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,11 +17,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/my_command_line_tool.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+            <state relative-caret-position="120">
+              <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/operations/ratio.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -77,8 +73,8 @@
         <option value="$PROJECT_DIR$/validation/validation.php" />
         <option value="$PROJECT_DIR$/error/errorFile.php" />
         <option value="$PROJECT_DIR$/imageSave/saveImage.php" />
-        <option value="$PROJECT_DIR$/operations/ratio.php" />
         <option value="$PROJECT_DIR$/imageLoad/loadImage.php" />
+        <option value="$PROJECT_DIR$/operations/ratio.php" />
       </list>
     </option>
   </component>
@@ -95,7 +91,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -161,6 +156,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -217,16 +213,18 @@
       <workItem from="1563265502218" duration="13892000" />
       <workItem from="1563346921242" duration="20771000" />
       <workItem from="1563431764275" duration="21483000" />
+      <workItem from="1563515779268" duration="53000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60057000" />
+    <option name="totallyTimeSpent" value="60110000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.257886" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26065302" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -288,9 +286,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trand.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/trand.jpg" />
     <entry file="file://$PROJECT_DIR$/error/errorFile.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -333,13 +329,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/operations/ratio.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-602">
-          <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/output/output.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -363,8 +352,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/my_command_line_tool.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        <state relative-caret-position="120">
+          <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operations/ratio.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
         </state>
       </provider>
     </entry>
