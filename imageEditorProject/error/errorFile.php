@@ -3,7 +3,7 @@
  * @param array $errors
  * @return string
  */
-function arrayToString(array $errors): string
+function convertsErrorArrayToString(array $errors): string
 {
     $errorArea = '';
     foreach ($errors as $key => $value) {
