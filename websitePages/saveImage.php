@@ -31,7 +31,7 @@ function saveImageToDirectory(string $path, string $uniqueImageName, string $ext
 }
 
 /**
- * Save the informations given by artist intro a file in his directory in JSON format.
+ * Save the informations given by artist intro a file in his directory in JSON format and return path.
  *
  * @param array $inputsValue
  * @param string $path
