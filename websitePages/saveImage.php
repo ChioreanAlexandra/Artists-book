@@ -1,6 +1,5 @@
 <?php
-const LOCAL_PATH = '/home/alexandrachiorean/Documents/uploads_artists-book/';
-const INFO_FILE_NAME = 'info.txt';
+const LOCAL_PATH = 'uploads/';
 /**
  * Creats a directory for each artist based on his name and email. We hash them for security;
  * @param string $artistName
@@ -10,7 +9,6 @@ const INFO_FILE_NAME = 'info.txt';
 function createDirectory(string $artistName, string $email): string
 {
     $encodePath = sprintf('%s%s%s/', LOCAL_PATH, md5($artistName), md5($email));
-    echo "This is my encode path" . $encodePath;
     if (file_exists($encodePath)) {
         return $encodePath;
     }
@@ -27,7 +25,7 @@ function createDirectory(string $artistName, string $email): string
  */
 function saveImageToDirectory(string $path, string $imageName, string $imageLocation)
 {
-    move_uploaded_file($imageLocation, $path . $imageName);
+    move_uploaded_file($imageLocation, $path . md5($imageName));
 }
 
 /**
@@ -39,7 +37,8 @@ function saveImageToDirectory(string $path, string $imageName, string $imageLoca
 function writeDetailsIntoFile(array $inputsValue, string $path)
 {
     $contentInJSONFormat = json_encode($inputsValue);
-    $handler = fopen($path . INFO_FILE_NAME, 'w');
+
+    $handler = fopen($path . md5(INFO_FILE_NAME.$inputsValue[IMAGE_FILE_NAME]).FILE_EXTENSION, 'w');
     fwrite($handler, $contentInJSONFormat);
 
 }
