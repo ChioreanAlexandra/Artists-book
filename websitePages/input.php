@@ -17,8 +17,9 @@ function getInputValues():array
     {
       $inputValues[$key]=$value;
     }
-    $inputValues[IMAGE_FILE_NAME]=$_FILES[IMAGE_TAG][IMAGE_FILE_NAME];
-    $inputValues[FILE_LOCATION]=$_FILES[IMAGE_TAG][FILE_LOCATION];
+    $inputValues[ORIGINAL_IMAGE_NAME]=$_FILES[IMAGE_TAG][IMAGE_FILE_NAME];
+    $inputValues[TEMP_FILE_LOCATION]=$_FILES[IMAGE_TAG][TEMP_FILE_LOCATION];
+
     return $inputValues;
 }
 
