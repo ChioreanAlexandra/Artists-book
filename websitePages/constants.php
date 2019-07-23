@@ -6,9 +6,12 @@ const ARTIST_EMAIL = 'email';
 const CAMERA_SPECS = 'cameraSpecs';
 const PRICE_IMAGE = 'imagePrice';
 const DATE = 'captureDate';
+
 const TAG = 'tag';
-const FILE_LOCATION ='tmp_name';
+const TEMP_FILE_LOCATION ='tmp_name';
 const IMAGE_FILE_NAME='name';
+const ORIGINAL_IMAGE_NAME='originalName';
+const IMAGE_NAME='imageName';
 const IMAGE_TAG='image';
 const LOCAL_PATH = 'uploads/';
 const INFO_FILE_NAME = 'info';
@@ -24,4 +27,4 @@ const TAGS=['Adventure Photography',
             'Landscape Photography',
             'Milky Way Photography'];
 const CURRENCY='currency';
-const FILE_EXTENSION='.json';
+const DATA_FILE_EXTENSION='.json';
