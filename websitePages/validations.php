@@ -99,7 +99,7 @@ function validateInput(array $inputValues):array
     {
         $errors[DATE]='Please add a valid date.';
     }
-    if(!validateExtension($inputValues[IMAGE_FILE_NAME]))
+    if(!validateExtension($inputValues[ORIGINAL_IMAGE_NAME]))
     {
         $errors[IMAGE_FILE_NAME]='Your file does not have a valid extension';
     }
