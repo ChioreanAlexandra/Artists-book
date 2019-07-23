@@ -1,8 +1,9 @@
 <?php
-
+session_start();
 include "input.php";
-include "validations.php";
 include "saveImage.php";
+include "constants.php";
+include "validations.php";
 ini_set('display_errors', 'ON');
 $errorMessage=validateEmptyFields();
 $errors=[];
@@ -11,14 +12,17 @@ if(empty($errorMessage) && $_POST)
 
     $inputValues=getInputValues();
     $errors=validateInput($inputValues);
-    var_dump($inputValues);
-    var_dump($errors);
     if(empty($errors))
     {
         echo 'aici';
         $path=createDirectory($inputValues[ARTIST_NAME],$inputValues[ARTIST_EMAIL]);
-        saveImage($path,$inputValues[FILE_NAME],$inputValues[FILE_LOCATION]);
-        saveFile($inputValues,$path);
+        saveImageToDirectory($path,$inputValues[IMAGE_FILE_NAME],$inputValues[FILE_LOCATION]);
+        unset($inputValues[FILE_LOCATION]); //image location no longer needed in the array storing inputs
+        writeDetailsIntoFile($inputValues,$path);
+        $_SESSION[ARTIST_NAME]=$inputValues[ARTIST_NAME];
+        $_SESSION[ARTIST_EMAIL]=$inputValues[ARTIST_EMAIL];
+        $_SESSION[IMAGE_FILE_NAME]=$inputValues[IMAGE_FILE_NAME];
+        header('Location:successPage.php');
     }
 }
 
@@ -27,9 +31,11 @@ if(empty($errorMessage) && $_POST)
 ?><!DOCTYPE html>
 <html>
 <head>
-    <title>Admin homepage</title>
+    <title>Upload image</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
 <div class="content">
@@ -53,7 +59,7 @@ if(empty($errorMessage) && $_POST)
         <label for="email">Email</label><br/>
         <input id="email" type="text" placeholder="Enter your email" name="email"/>
 
-        <div>
+        <div style="color: red">
             <?php if(isset($errors[ARTIST_EMAIL]))echo $errors[ARTIST_EMAIL];?>
         </div>
 
@@ -66,8 +72,10 @@ if(empty($errorMessage) && $_POST)
         <br/>
         <label for="imagePrice">Price</label><br/>
         <input id="imagePrice" type="number" placeholder="Enter price" name="imagePrice" step="0.01" min="0">
+        <input type="radio" name="currency" value="LEI" checked="checked"> LEI
+        <input type="radio" name="currency" value="EUR"> EUR
         <br/>
-        <div>
+        <div style="color: red">
             <?php if(isset($errors[PRICE_IMAGE]))echo $errors[PRICE_IMAGE];?>
         </div>
 
@@ -78,18 +86,27 @@ if(empty($errorMessage) && $_POST)
 
         <br/>
 
-        <div>
+        <div style="color: red">
             <?php if(isset($errors[DATE]))echo $errors[DATE];?>
         </div>
 
         <br/>
-        <label for="tags">Tags</label>
-        <select name="tag">
-            <option>Nu vreau sa fac asta</option>
+        <label for="tag[]">Tags</label>
+        <select name="tag[]" multiple>
+            <option>Adventure Photography</option>
+            <option>Astrophotography</option>
+            <option>Black and White Photography</option>
+            <option>Cityscape Photography</option>
+            <option>Creative Photography</option>
+            <option>Family Photography</option>
+            <option>Fine Art Photography</option>
+            <option>Infrared Photography</option>
+            <option>Landscape Photography</option>
+            <option>Milky Way Photography</option>
         </select>
         <br/>
 
-        <div>
+        <div style="color: red">
             <?php if(isset($error[TAG]))echo $errors[TAG];?>
         </div>
 
@@ -98,14 +115,14 @@ if(empty($errorMessage) && $_POST)
 
         <label for="image">Image to be uploaded</label> &nbsp;
         <input type="file" name="image"/>
-        <Br/>
-        <div>
-            <?php if(!empty($errors[FILE_NAME]))echo $errors[FILE_NAME];?>
+        <br/>
+        <div style="color: red">
+            <?php if(!empty($errors[IMAGE_FILE_NAME]))echo $errors[IMAGE_FILE_NAME];?>
         </div>
-        <Br/>
-        <Br/>
+        <br/>
+        <br/>
         <input type="submit" value="Upload form" name="submit">
-        <div>
+        <div style="color: red">
             <?php if(!empty($errorMessage))echo $errorMessage;?>
         </div>
 
