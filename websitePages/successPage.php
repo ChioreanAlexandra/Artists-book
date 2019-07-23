@@ -2,18 +2,12 @@
 session_start();
 include "constants.php";
 /**
- * @param string $name
- * @param string $email
+ * @param string $path
  * @return string
  */
-function encodePath(string $name, string $email):string
+function readFormatDataFromFile(string $path):string
 {
-    return sprintf('%s%s%s/', LOCAL_PATH, md5($name), md5($email));
-}
-function readFormatDataFromFile(string $name, string $email,string $imageName):string
-{
-    $path = encodePath($name,$email);
-    return file_get_contents($path.md5(INFO_FILE_NAME.$imageName).FILE_EXTENSION);
+    return file_get_contents($path);
 }
 
 /**
@@ -26,6 +20,17 @@ function decodeFile(string $content):array
 {
     $decodedContent=json_decode($content);
     return (array) $decodedContent;
+}
+
+/**
+ * Extract folder path for using it when loading the image
+ * @param string $filePath
+ * @return string
+ */
+function getFolderPath(string $filePath):string
+{
+    preg_match('/(?<folderPath>.*\/)/',$filePath,$match);
+    return $match['folderPath'];
 }
 ?>
 <!DOCTYPE html>
@@ -42,9 +47,9 @@ function decodeFile(string $content):array
     <div>
         Your information have been successfully saved.
         <?php
-        if (isset($_SESSION[ARTIST_NAME]) && isset($_SESSION[ARTIST_EMAIL]) && isset($_SESSION[IMAGE_FILE_NAME])) {
+        if (isset($_SESSION[INFO_FILE_NAME])) {
 
-            $content=readFormatDataFromFile($_SESSION[ARTIST_NAME],$_SESSION[ARTIST_EMAIL], $_SESSION[IMAGE_FILE_NAME]);
+            $content=readFormatDataFromFile($_SESSION[INFO_FILE_NAME]);
             $detailsArray=decodeFile($content);
 
         }
@@ -99,7 +104,7 @@ function decodeFile(string $content):array
     <br>
     <br>
     <div align="center">
-        <img src="<?php echo encodePath($_SESSION[ARTIST_NAME],$_SESSION[ARTIST_EMAIL]).md5($detailsArray[IMAGE_FILE_NAME]);?>" height="500" width="500">
+        <img src="<?php  echo getFolderPath($_SESSION[INFO_FILE_NAME]).$detailsArray[IMAGE_NAME];?>" height="500" width="500">
     </div>
 
 
