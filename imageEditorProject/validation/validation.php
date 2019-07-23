@@ -126,7 +126,6 @@ function validateFileType(string $path): bool
     if(!empty($match['type']))
         return validateExtension($match['type']);
     return false;
-
 }
 
 /**
