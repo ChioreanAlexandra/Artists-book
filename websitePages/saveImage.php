@@ -19,26 +19,31 @@ function createDirectory(string $artistName, string $email): string
 
 /**
  * Saves the picture uploaded by artist to his local directory
+ *
  * @param string $path
- * @param string $imageName
+ * @param string $uniqueImageName
+ * @param string $extension
  * @param string $imageLocation
  */
-function saveImageToDirectory(string $path, string $imageName, string $imageLocation)
+function saveImageToDirectory(string $path, string $uniqueImageName, string $extension, string $imageLocation)
 {
-    move_uploaded_file($imageLocation, $path . md5($imageName));
+    move_uploaded_file($imageLocation, $path . $uniqueImageName .'.'. $extension);
 }
 
 /**
  * Save the informations given by artist intro a file in his directory in JSON format.
  *
  * @param array $inputsValue
- * @param $path
+ * @param string $path
+ * @param string $uniqueName
+ * @return string
  */
-function writeDetailsIntoFile(array $inputsValue, string $path)
+function writeDetailsIntoFile(array $inputsValue, string $path, string $uniqueName)
 {
     $contentInJSONFormat = json_encode($inputsValue);
-
-    $handler = fopen($path . md5(INFO_FILE_NAME.$inputsValue[IMAGE_FILE_NAME]).FILE_EXTENSION, 'w');
+    $composedPath = sprintf("%s%s%s", $path, $uniqueName, DATA_FILE_EXTENSION);
+    $handler = fopen($composedPath, 'w');
     fwrite($handler, $contentInJSONFormat);
+    return $composedPath;
 
 }
