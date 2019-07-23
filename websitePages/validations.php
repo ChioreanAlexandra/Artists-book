@@ -61,7 +61,7 @@ function validatePrice(string $price):bool
  */
 function validateTags(array $tags):bool
 {
-    foreach ($tags as $value)
+   foreach ($tags as $value)
     {
         if(!in_array($value,TAGS))
         {
@@ -70,7 +70,12 @@ function validateTags(array $tags):bool
     }
     return true;
 }
-
+function validateExtension(string $path):bool
+{
+    preg_match(VALIDATE_EXTENSION_PATTERN,$path,$match);
+    $extensionType=['jpg','jpeg','png'];
+    return in_array($match['ext'],$extensionType);
+}
 /**
  * @param array $inputValues
  * @return array
@@ -80,23 +85,23 @@ function validateInput(array $inputValues):array
     $errors=[];
     if(!validateEmail($inputValues[ARTIST_EMAIL]))
     {
-        $errors[ARTIST_EMAIL]='Give a valid email type';
+        $errors[ARTIST_EMAIL]='The email is not valid';
     }
     if(!validatePrice($inputValues[PRICE_IMAGE]))
     {
         $errors[PRICE_IMAGE]='Invalid price';
     }
-    /*if(!validateTags($inputValues[TAG]))
+    if(!validateTags($inputValues[TAG]))
     {
         $errors[TAG]='Choose one of the given tags';
-    }*/
+    }
     if(!validateDate($inputValues[DATE]))
     {
-        $errors[DATE]='Give a valid date';
+        $errors[DATE]='Please add a valid date.';
     }
-    /*if(!validateExtension($inputValues[FILE_NAME]))
+    if(!validateExtension($inputValues[IMAGE_FILE_NAME]))
     {
-        $errors[FILE_NAME]='Your file does not have a valid extension';
-    }*/
+        $errors[IMAGE_FILE_NAME]='Your file does not have a valid extension';
+    }
     return $errors;
 }
