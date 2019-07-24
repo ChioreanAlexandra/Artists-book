@@ -1,15 +1,6 @@
 <?php
 
-function castIntType(string $value):int
+function canExecute(array $payload, string $option):bool
 {
-    return (int) $value;
-}
-
-function canExecute(array $payload,$option):bool
-{
-    if(!isset($payload[$option]))
-    {
-        return false;
-    }
-    return true;
+    return isset($payload[$option]);
 }
