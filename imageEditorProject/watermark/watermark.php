@@ -46,7 +46,7 @@ function addWatermark(array $payload): array
     $image = $payload[IMAGE];
     $watermarkImage = new Imagick($payload[WATERMARK]);
     $watermarkImage->scaleImage($image->getImageWidth()/SCALE_VALUE,$image->getImageHeight()/SCALE_VALUE);
-    $coordinates = computeRandomoordinates($image->getImageWidth(), $image->getImageHeight(), $watermarkImage->getImageWidth(), $watermarkImage->getImageHeight());
+    $coordinates = computeRandomCoordinates($image->getImageWidth(), $image->getImageHeight(), $watermarkImage->getImageWidth(), $watermarkImage->getImageHeight());
     $image->compositeImage($watermarkImage, imagick::COMPOSITE_OVER, $coordinates[WIDTH], $coordinates[HEIGHT]);
     $payload[IMAGE] = $image;
     unset($payload[WATERMARK]);
