@@ -18,8 +18,7 @@ function readFormatDataFromFile(string $path):string
  */
 function decodeFile(string $content):array
 {
-    $decodedContent=json_decode($content);
-    return (array) $decodedContent;
+    return json_decode($content, true);
 }
 
 /**

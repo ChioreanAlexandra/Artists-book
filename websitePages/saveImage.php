@@ -22,7 +22,6 @@ function createDirectory(string $artistName, string $email): string
  *
  * @param string $path
  * @param string $uniqueImageName
- * @param string $extension
  * @param string $imageLocation
  */
 function saveImageToDirectory(string $path, string $uniqueImageName, string $imageLocation)
