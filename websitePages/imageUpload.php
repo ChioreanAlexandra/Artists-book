@@ -14,17 +14,23 @@ if(empty($errorMessage) && $_POST)
     $errors=validateInput($inputValues);
     if(empty($errors))
     {
+        $folderPath=createDirectory($inputValues[ARTIST_NAME],$inputValues[ARTIST_EMAIL]);
+
         $uniqueName=uniqid();
-        $path=createDirectory($inputValues[ARTIST_NAME],$inputValues[ARTIST_EMAIL]);
         preg_match(VALIDATE_EXTENSION_PATTERN,$inputValues[ORIGINAL_IMAGE_NAME],$match);
         $imageExtension=$match['ext'];
-        saveImageToDirectory($path,$uniqueName,$imageExtension,$inputValues[TEMP_FILE_LOCATION]);
         $inputValues[IMAGE_NAME]=$uniqueName.'.'.$imageExtension;
+
+        saveImageToDirectory($folderPath,$inputValues[IMAGE_NAME],$inputValues[TEMP_FILE_LOCATION]);
+
         unset($inputValues[TEMP_FILE_LOCATION]); //image location no longer needed in the array storing inputs
-        $path=writeDetailsIntoFile($inputValues,$path,$uniqueName);
+
+        $infoFilePath=writeDetailsIntoFile($inputValues,$folderPath,$uniqueName);
+
         $_SESSION[ARTIST_NAME]=$inputValues[ARTIST_NAME];
         $_SESSION[ARTIST_EMAIL]=$inputValues[ARTIST_EMAIL];
-        $_SESSION[INFO_FILE_NAME]=$path;
+        $_SESSION[INFO_FILE_NAME]=$infoFilePath;
+
         header('Location:successPage.php');
     }
 }
