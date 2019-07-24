@@ -16,7 +16,7 @@ function executeWidth (array $payload):array
     {
         return $payload;
     }
-    $width = castIntType($payload[WIDTH]);
+    $width = (int) ($payload[WIDTH]);
 
     /** @var \Imagick $image */
 

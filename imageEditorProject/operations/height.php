@@ -16,7 +16,7 @@ function executeHeight (array $payload):array
     {
         return $payload;
     }
-    $height = castIntType($payload[HEIGHT]);
+    $height =(int) $payload[HEIGHT];
 
     /** @var \Imagick $image */
 
