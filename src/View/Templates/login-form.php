@@ -11,7 +11,17 @@
 <div class="content">
     <h1>LOGIN page</h1>
 
-    <a href="/user/login" >LoginPost</a>
+    <form action="/user/login" method="POST">
+        <label for="user">Username</label><br/>
+        <input id="user" type="text" placeholder="Enter username" name="username"/>
+
+        <br/>
+        <br/>
+        <label for="password">Password</label><br/>
+        <input id="password" type="password" placeholder="Enter password" name="password"/>
+
+        <input type="submit" value="Login">
+    </form>
     <a href="/user/registerPage" >Register</a>
 
 </div>
