@@ -1,36 +1,37 @@
 <?php
 
 namespace MyApp\Controller;
+use MyApp\View\Renderers\HomePageRenderer;
+use MyApp\View\Renderers\ProductPageRenderer;
+use MyApp\View\Renderers\UploadProductRenderer;
+
 class ProductController
 {
+    /** @var array  */
     public static function showProducts()
     {
-        require_once("src/View/Templates/home-page.php");
-
+        HomePageRenderer::render();
     }
 
     public static function showProduct()
     {
-        require_once("src/View/Templates/product-page.php");
-
+        ProductPageRenderer::render();
     }
 
     public static function uploadProductPage()
     {
-        require_once("src/View/Templates/upload-form.php");
+        UploadProductRenderer::render();
     }
-
 
     public static function uploadProduct()
     {
-        require_once("src/View/Templates/profile-page.php");
+        header("Location:/user/profile/");
     }
 
     public static function buyProduct()
     {
         echo 'on buy';
-        //require_once("src/View/Templates/home-page.php");
-
+        //require_once("src/View/Templates/home-page.php");git +
     }
 
 }
