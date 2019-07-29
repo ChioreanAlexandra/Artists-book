@@ -1,3 +1,6 @@
+<?php
+use \MyApp\Model\Helper\Form\UserField;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,14 +15,18 @@
     <h1>LOGIN page</h1>
 
     <form action="/user/login" method="POST">
-        <label for="user">Username</label><br/>
-        <input id="user" type="text" placeholder="Enter username" name="username"/>
-
+        <label for="user">Email</label><br/>
+        <input id="user" type="text" placeholder="Enter email" name="email"/>
+        <div style="color: red">
+            <?php if(isset($errors[UserField::getEmailField()]))echo $errors[UserField::getEmailField()];?>
+        </div>
         <br/>
         <br/>
         <label for="password">Password</label><br/>
         <input id="password" type="password" placeholder="Enter password" name="password"/>
-
+        <div style="color: red">
+            <?php if(isset($errors[UserField::getPasswordField()]))echo $errors[UserField::getPasswordField()];?>
+        </div>
         <input type="submit" value="Login">
     </form>
     <a href="/user/registerPage" >Register</a>
