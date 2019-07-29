@@ -12,7 +12,7 @@ class Product
     private $title;
     /** @var string */
     private $description;
-    /** TODO: set property type */
+    /** @var array */
     private $tags;
     /** @var string */
     private $cameraSpecs;
@@ -21,7 +21,7 @@ class Product
     /** @var  string*/
     private $thumbnailPath;
 
-    public function __construct(int $userId, string $title, string $description, string $cameraSpecs, \DateTime $captureDate, string $thumbnailPath, int $id=null)
+    public function __construct(int $userId, string $title, string $description, string $cameraSpecs, \DateTime $captureDate, array $tags, string $thumbnailPath, int $id=null)
     {
         $this->id=$id;
         $this->userId=$userId;
@@ -30,27 +30,27 @@ class Product
         $this->cameraSpecs=$cameraSpecs;
         $this->captureDate=$captureDate;
         $this->thumbnailPath=$thumbnailPath;
+        $this->tags=$tags;
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
+    public function setId(int $id):int
+    {
+        $this->id=$id;
+    }
+
+    /**@return int */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @return string
-     */
+    /**@return string */
     public function getTitle(): string
     {
         return $this->title;
