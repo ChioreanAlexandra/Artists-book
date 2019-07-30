@@ -8,6 +8,7 @@ use MyApp\Model\Http\RequestFactory;
 use MyApp\Model\Http\Session;
 use MyApp\Model\Http\SessionFactory;
 use MyApp\Model\Persistence\Finder\ProductFinder;
+use MyApp\Model\Persistence\Finder\TagFinder;
 use MyApp\Model\Persistence\PersistenceFactory;
 use MyApp\View\Renderers\HomePageRenderer;
 use MyApp\View\Renderers\ProductPageRenderer;
@@ -22,7 +23,8 @@ class ProductController
         $productFinder = PersistenceFactory::createFinder(Product::class);
         /** @var array $products */
         $products = $productFinder->findAll();
-        HomePageRenderer::render($products);
+        $renderer=new HomePageRenderer();
+        $renderer->render($products);
     }
 
     public static function showProduct()
@@ -32,7 +34,11 @@ class ProductController
 
     public static function uploadProductPage()
     {
-        UploadProductRenderer::render();
+        /** @var TagFinder $tagFinder */
+        $tagFinder = PersistenceFactory::createFinder(Tag::class);
+        /** @var array $tags */
+        $tags = $tagFinder->findAll();
+        UploadProductRenderer::render($tags);
     }
 
     public static function uploadProduct()
@@ -40,6 +46,7 @@ class ProductController
 
         $request=RequestFactory::createRequest();
         $session=SessionFactory::createSession();
+        var_dump($session);
         $error=[];
         /** @var UploadProductFormMapper $uploadFormMapper */
         $uploadFormMapper=new UploadProductFormMapper($request,$session);

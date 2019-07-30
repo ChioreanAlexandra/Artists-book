@@ -40,12 +40,13 @@ class UserController
 
         $loginFormMapper=new LoginFormMapper($request);
         $loginUser=$loginFormMapper->createUserFromLoginForm();
-        echo $loginUser;
+        ///echo $loginUser;
 
         /** @var UserFinder $userFinder */
         $userFinder = PersistenceFactory::createFinder(User::class);
         /** @var User $user */
         $user = $userFinder->findByCredentials($loginUser->getEmail(), $loginUser->getPassword());
+        var_dump($user);
 
         if($user==null)
         {
@@ -62,25 +63,36 @@ class UserController
 
     public static function registerPage()
     {
-        RegisterRenderer::render();
+        $renderer=new RegisterRenderer();
+        $renderer->render();
     }
 
     public static function register()
     {
-        $request=RequestFactory::getRequest();
+        $request=RequestFactory::createRequest();
         $error=[];
         $registerFormMapper=new RegisterFormMapper($request);
         $registerUser=$registerFormMapper->createUserFromRegisterForm();
         /** @var UserMapper $userMapper */
         $userMapper = PersistenceFactory::createMapper(User::class);
-        $userMapper->save($registerUser);
-        //require_once("src/View/Templates/profile-page.php");
+        $userId=$userMapper->save($registerUser);
+        $session=SessionFactory::createSession();
+        $session->setSessionValue(UserField::getId(),$userId);
+        var_dump($session->getSession());
+        require_once("src/View/Templates/profile-page.php");
     }
 
     public static function profile()
     {
-        ProfilePageRenderer::render();
+        $renderer=new ProfilePageRenderer();
+        $renderer->render();
 
         //require_once("src/View/Templates/profile-page.php");
+    }
+    public static function logout()
+    {
+        $session=SessionFactory::createSession();
+        $session->unsetSessionKey(UserField::getId());
+        header("Location:/product/showProducts");
     }
 }
