@@ -7,16 +7,16 @@ use MyApp\Model\Helper\Form\UserField;
 
 class UserMapper extends AbstractMapper
 {
-    public function save(User $user)
+    public function save(User $user):int
     {
         if ($user->getId() === null) {
-            $this->insert($user);
+            return $this->insert($user);
         } else {
-            $this->update($user);
+            return $this->update($user);
         }
     }
 
-    private function insert(User $user)
+    private function insert(User $user): int
     {
         //TODO: transform user to array row then prepare an INSERT ($this->getPdo()) and execute
         $row = $this->translateToArray($user);
@@ -26,6 +26,7 @@ class UserMapper extends AbstractMapper
         $statement->bindValue('email', $row[UserField::getEmailField()]);
         $statement->bindValue('password', $row[UserField::getPasswordField()]);
         $statement->execute();
+        return $this->getPdo()->lastInsertId();
     }
 
     private function translateToArray(User $user): array
@@ -47,7 +48,7 @@ class UserMapper extends AbstractMapper
         return $row;
     }
 
-    private function update(User $user)
+    private function update(User $user):int
     {
         //TODO: transform user to array row then prepare an UPDATE ($this->getPdo()) and execute
         $row = $this->translateToArray($user);
@@ -55,5 +56,6 @@ class UserMapper extends AbstractMapper
         $statement = $this->getPdo()->prepare($sql);
         // ... bind parameters from $row
         $statement->execute();
+        return 0;
     }
 }
