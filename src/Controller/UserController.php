@@ -4,8 +4,14 @@
 namespace MyApp\Controller;
 
 
+use MyApp\Model\Http\RequestFactory;
+use MyApp\Model\Http\SessionFactory;
+use MyApp\Model\Persistence\Finder\UserFinder;
+use MyApp\Model\Persistence\Mapper\UserMapper;
+use MyApp\Model\Persistence\PersistenceFactory;
 use MyApp\Model\DomainObjects\User;
 use MyApp\Model\FormMapper\LoginFormMapper;
+use MyApp\Model\FormMapper\RegisterFormMapper;
 use MyApp\Model\Helper\Form\UserField;
 use MyApp\Model\Http\Session;
 use MyApp\Model\Validation\FormValidators\LoginFormValidator;
@@ -13,6 +19,7 @@ use MyApp\Model\Http\Request;
 use MyApp\View\Renderers\LoginRenderer;
 use MyApp\View\Renderers\ProfilePageRenderer;
 use MyApp\View\Renderers\RegisterRenderer;
+use MyApp\Model\Persistence\Finder\AbstractFinder;
 
 
 class UserController
@@ -25,40 +32,30 @@ class UserController
         LoginRenderer::render();
     }
 
-    public static function getRequest():Request
-    {
-        return new Request();
-    }
-
-    public static function getSession():Session
-    {
-        return new Session();
-    }
 
     public static function login()
     {
-        $password='1234';
-        $email='ale@yahoo.com';
-        $request=self::getRequest();
+        $request=RequestFactory::createRequest();
         $error=[];
+
         $loginFormMapper=new LoginFormMapper($request);
         $loginUser=$loginFormMapper->createUserFromLoginForm();
         echo $loginUser;
-        if($password != $loginUser->getPassword())
-        {
-            $error[UserField::getPasswordField()]='Wrong password';
-        }
-        if($email != $loginUser->getEmail())
-        {
-            $error[UserField::getEmailField()]='Wrong email';
-        }
 
-        if(!empty($error)) {
+        /** @var UserFinder $userFinder */
+        $userFinder = PersistenceFactory::createFinder(User::class);
+        /** @var User $user */
+        $user = $userFinder->findByCredentials($loginUser->getEmail(), $loginUser->getPassword());
+
+        if($user==null)
+        {
+            $error['error']='Email/password wrong';
             LoginRenderer::render($error);
             return;
         }
-        $session=self::getSession();
-        $session->setSessionValue(UserField::getId(),11);
+
+        $session=SessionFactory::createSession();
+        $session->setSessionValue(UserField::getId(),$user->getId());
         header('Location:/user/profile');
 
     }
@@ -70,12 +67,20 @@ class UserController
 
     public static function register()
     {
-        require_once("src/View/Templates/profile-page.php");
+        $request=RequestFactory::getRequest();
+        $error=[];
+        $registerFormMapper=new RegisterFormMapper($request);
+        $registerUser=$registerFormMapper->createUserFromRegisterForm();
+        /** @var UserMapper $userMapper */
+        $userMapper = PersistenceFactory::createMapper(User::class);
+        $userMapper->save($registerUser);
+        //require_once("src/View/Templates/profile-page.php");
     }
 
     public static function profile()
     {
         ProfilePageRenderer::render();
+
         //require_once("src/View/Templates/profile-page.php");
     }
 }
