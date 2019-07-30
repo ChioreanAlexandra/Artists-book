@@ -32,9 +32,9 @@ class UploadProductFormMapper
                             $this->request->getPost()[ProductField::getImageTitleField()],
                             $this->request->getPost()[ProductField::getImageDescriptionField()],
                             $this->request->getPost()[ProductField::getCameraSpecsField()],
-                            $this->request->getPost()[ProductField::getCaptureDate()],
-                            $this->request->getPost()[ProductField::getTagField()],
-                            'thumbnail');
+                            new \DateTime($this->request->getPost()[ProductField::getCaptureDate()]),
+                            'thumbnail',
+                            $this->request->getPost()[ProductField::getTagField()]);
     }
 
 }
