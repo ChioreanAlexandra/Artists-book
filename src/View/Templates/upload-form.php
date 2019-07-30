@@ -13,24 +13,15 @@
 <body>
 <div class="content">
     <h1>Upload image</h1>
-    <form action="" method=POST enctype="multipart/form-data">
+    <form action="/product/uploadProduct" method=POST enctype="multipart/form-data">
         <label for="imageTitle">Image title</label><br/>
-        <input id="imageTitle" type="text" placeholder="Enter the image title" name="imageTitle"/>
+        <input id="imageTitle" type="text" placeholder="Enter the image title" name="title"/>
 
         <br/>
         <br/>
         <label for="imageDescription">Image description</label><br/>
-        <input id="imageDescription" type="text" placeholder="Enter an image description" name="imageDescription"/>
+        <input id="imageDescription" type="text" placeholder="Enter an image description" name="description"/>
 
-        <br/>
-        <br/>
-        <label for="artistName">Name</label><br/>
-        <input id="artistName" type="text" placeholder="Enter your name" name="artistName"/>
-
-        <br/>
-        <br/>
-        <label for="email">Email</label><br/>
-        <input id="email" type="text" placeholder="Enter your email" name="email"/>
 
         <div style="color: red">
             <?php //if(isset($errors[ARTIST_EMAIL]))echo $errors[ARTIST_EMAIL];?>
@@ -39,14 +30,16 @@
         <br/>
         <br/>
         <label for="cameraSpecs">Camera specifications</label><br/>
-        <input id="imageDescription" type="text" placeholder="Enter the camera specifications" name="cameraSpecs"/>
+        <input id="imageDescription" type="text" placeholder="Enter the camera specifications" name="camera_specs"/>
 
         <br/>
         <br/>
         <label for="imagePrice">Price</label><br/>
-        <input id="imagePrice" type="number" placeholder="Enter price" name="imagePrice" step="0.01" min="0">
-        <input type="radio" name="currency" value="LEI" checked="checked"> LEI
-        <input type="radio" name="currency" value="EUR"> EUR
+        <input id="imagePrice" type="number" placeholder="Enter large tier" name="priceLargeTier" step="0.01" min="0">
+        <input id="imagePrice" type="number" placeholder="Enter medium tier" name="priceMediumTier" step="0.01" min="0">
+        <input id="imagePrice" type="number" placeholder="Enter small tier" name="priceSmallTier" step="0.01" min="0">
+        <label for="currency">LEI</label><br/>
+
         <br/>
         <div style="color: red">
             <?//php if(isset($errors[PRICE_IMAGE]))echo $errors[PRICE_IMAGE];?>
@@ -55,7 +48,7 @@
 
         <br/>
         <label for="date">Capture date</label><br/>
-        <input id="date" type="date" name="captureDate">
+        <input id="date" type="date" name="capture_data">
 
         <br/>
 

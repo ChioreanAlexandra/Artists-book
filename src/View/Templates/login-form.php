@@ -18,16 +18,15 @@ use \MyApp\Model\Helper\Form\UserField;
         <label for="user">Email</label><br/>
         <input id="user" type="text" placeholder="Enter email" name="email"/>
         <div style="color: red">
-            <?php if(isset($errors[UserField::getEmailField()]))echo $errors[UserField::getEmailField()];?>
         </div>
         <br/>
         <br/>
         <label for="password">Password</label><br/>
         <input id="password" type="password" placeholder="Enter password" name="password"/>
         <div style="color: red">
-            <?php if(isset($errors[UserField::getPasswordField()]))echo $errors[UserField::getPasswordField()];?>
         </div>
         <input type="submit" value="Login">
+        <?php if(isset($errors['error']))echo $errors['error'];?>
     </form>
     <a href="/user/registerPage" >Register</a>
 

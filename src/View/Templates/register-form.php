@@ -18,8 +18,8 @@
         <br/>
         <br/>
 
-        <label for="user">Email</label><br/>
-        <input id="user" type="text" placeholder="Enter email" name="username"/>
+        <label for="email">Email</label><br/>
+        <input id="email" type="text" placeholder="Enter email" name="email"/>
 
         <br/>
         <br/>

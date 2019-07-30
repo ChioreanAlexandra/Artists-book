@@ -12,35 +12,22 @@
 <a href="/user/loginPage" >Login</a>
 <div class="container">
     <h2>Image Gallery</h2>
+
     <div class="row">
+        <?php foreach ($productList as $product):?>
         <div class="col-md-4">
             <div class="thumbnail">
                 <
-                    <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+                    <a href="/product/showProduct">
+                    <img src=<?php echo $product->getThumbnailPath();?> alt="Lights" style="width:100%">
                     <div class="caption">
-                        <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                        <p><?php echo $product->getTitle();?></p>
                     </div>
                 </a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="thumbnail">
-                    <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
-                    <div class="caption">
-                        <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="thumbnail">
-                    <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
-                    <div class="caption">
-                        <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
-                    </div>
-                </a>
-            </div>
-        </div>
+        <?php endforeach; ?>
+
     </div>
 </div>
 
