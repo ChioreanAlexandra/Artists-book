@@ -9,7 +9,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<a href="/user/loginPage" >Login</a>
 <div class="container">
     <h2>Image Gallery</h2>
 
@@ -30,8 +29,5 @@
 
     </div>
 </div>
-
-</body>
-</html>
 
 

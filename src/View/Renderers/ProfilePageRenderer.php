@@ -4,11 +4,11 @@
 namespace MyApp\View\Renderers;
 
 
-class ProfilePageRenderer
+class ProfilePageRenderer extends RendererTemplate
 {
     private const PROFILE_PAGE_HTML_FILE='src/View/Templates/profile-page.php';
 
-    public static function render(array $error=[])
+    public function ownRender(array $error=null)
     {
         require_once "".self::PROFILE_PAGE_HTML_FILE."";
     }

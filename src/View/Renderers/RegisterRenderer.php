@@ -4,13 +4,14 @@
 namespace MyApp\View\Renderers;
 
 
-class RegisterRenderer
+class RegisterRenderer extends RendererTemplate
 {
     private const REGISTER_HTML_FILE = 'src/View/Templates/register-form.php';
 
-    public static function render(array $error = [])
+    public function ownRender(array $error = [])
     {
         require_once "" . self::REGISTER_HTML_FILE . "";
     }
+
 
 }
