@@ -1,8 +1,9 @@
 {
 "name": "artists-book",
 "require": {
-        "php":"7.*"
-    },
+        "php":"7.*",
+  "ext-pdo": "*"
+},
 "autoload": {
         "psr-4": {
             "MyApp\\":"src/"
