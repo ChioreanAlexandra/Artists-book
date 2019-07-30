@@ -6,23 +6,23 @@ class User
 {
     /** @var int */
     private $id;
-    /** @var string $name*/
+    /** @var string $name */
     private $name;
-    /** @var string $email*/
+    /** @var string $email */
     private $email;
-    /** @var string $password*/
+    /** @var string $password */
     private $password;
 
-    public function __construct( string $email, string $password, int $id=null, string $name=null)
+    public function __construct(string $email, string $password = null, string $name = null, int $id = null)
     {
-        $this->id=$id;
+        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
     }
 
     /** @return int */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -72,8 +72,8 @@ class User
     //TODO:getOrders();
     //TODO:getProducts();
 
-    public function __toString():string
+    public function __toString(): string
     {
-       return sprintf('Email: %s Password: %s Name: %s',$this->email,$this->password,$this->name);
+        return sprintf('Email: %s Password: %s Name: %s', $this->email, $this->password, $this->name);
     }
 }

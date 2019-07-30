@@ -1,7 +1,6 @@
 <?php
 
 namespace MyApp\Model\DomainObjects;
-
 class Product
 {
     /** @var int */
@@ -21,7 +20,7 @@ class Product
     /** @var  string*/
     private $thumbnailPath;
 
-    public function __construct(int $userId, string $title, string $description, string $cameraSpecs, \DateTime $captureDate, array $tags, string $thumbnailPath, int $id=null)
+    public function __construct(int $userId, string $title, string $description, string $cameraSpecs, \DateTime $captureDate, string $thumbnailPath, array $tags=null, int $id=null)
     {
         $this->id=$id;
         $this->userId=$userId;
