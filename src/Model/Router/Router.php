@@ -5,6 +5,9 @@ namespace MyApp\Model\Router;
 
 
 use MyApp\Model\Helper\Form\UserField;
+use MyApp\Model\Http\Request;
+use MyApp\Model\Http\RequestFactory;
+use MyApp\Model\Http\Session;
 use MyApp\Model\Http\SessionFactory;
 
 class Router
@@ -12,7 +15,7 @@ class Router
     /** @var string */
     public $path;
     const CONTROLLER = 'Controller';
-    const NAMESPACE_CONST = 'MyApp\Controller';
+    const NAMESPACE_CONST = 'MyApp\Controller\\';
     const CLASSNAME_REGEX = '/\/(?<className>[a-z]+)\//';
     const METHODNAME_REGEX = '/[a-z]+\/(?<methodName>[a-zA-Z]+)/';
 
@@ -21,13 +24,11 @@ class Router
         $this->path = $path;
     }
 
-    public function getClass(string $serverUri): string
+    public function getControllerClass(string $controller): string
     {
-        preg_match(CLASSNAME_REGEX, $serverUri, $match);
-        if (isset($match['className'])) {
-            return ucfirst($match['className']);
-        }
-        return '';
+
+        return self::NAMESPACE_CONST . ucfirst($controller) . self::CONTROLLER;
+
     }
 
     public function getMethod(string $serverUri): string
@@ -41,17 +42,19 @@ class Router
 
     public function getRoute()
     {
-        session_start();
-        switch ($this->path) {
-            case '/':
-                call_user_func('MyApp\Controller\ProductController::showProducts');
-                break;
-            default:
-                $className = $this->getClass($this->path);
-                $methodName = $this->getMethod($this->path);
-                call_user_func(sprintf('%s\%s%s::%s', NAMESPACE_CONST, $className, CONTROLLER, $methodName));
-                break;
+        $route = Route::createFromString($this->path);
+        $controllerClass = $this->getControllerClass($route->getController());
+        if (!class_exists($controllerClass)) {
+            $controllerClass = 'MyApp\Controller\ProductController';
         }
+        $method = $route->getAction();
+        if (!method_exists($controllerClass, $method)) {
+            $method = 'showProducts';
+        }
+
+        $controller = new $controllerClass(new Session(),new Request());
+        $controller->{$method}($route->getParam());
+
 
     }
 }
