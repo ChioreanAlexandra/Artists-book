@@ -2,6 +2,8 @@
 
 namespace MyApp\Model\DomainObjects;
 
+use DateTime;
+
 class OrderItem
 {
     /** @var int */
