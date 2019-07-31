@@ -1,6 +1,8 @@
 <?php
 
 namespace MyApp\Model\DomainObjects;
+use MyApp\Model\Persistence\PersistenceFactory;
+
 class Product
 {
     /** @var int */
@@ -95,5 +97,9 @@ class Product
         return $this->thumbnailPath;
     }
 
-    //TODO:getTiers();
+    public function getTiers()
+    {
+        $productFinder = PersistenceFactory::createFinder(Product::class);
+        return $productFinder->getTiersById($this->id);
+    }
 }
