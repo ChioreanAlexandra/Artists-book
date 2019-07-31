@@ -48,7 +48,6 @@ class ProductController
 
     private static function uploadTiers(array $tiers)
     {
-        var_dump($tiers);
         $tierMapper = PersistenceFactory::createMapper(Tier::class);
         foreach ($tiers as $item)
         {
