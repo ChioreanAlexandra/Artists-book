@@ -13,6 +13,10 @@ class ProductMapper extends AbstractMapper
         return $this->insert($product);
     }
 
+    /**
+     * @param Product $product
+     * @return int
+     */
     private function insert(Product $product): int
     {
         //TODO: transform user to array row then prepare an INSERT ($this->getPdo()) and execute

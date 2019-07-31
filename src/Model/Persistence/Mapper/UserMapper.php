@@ -7,13 +7,12 @@ use MyApp\Model\Helper\Form\UserField;
 
 class UserMapper extends AbstractMapper
 {
-    public function save(User $user):int
+    public function save(User $user): int
     {
         if ($user->getId() === null) {
             return $this->insert($user);
-        } else {
-            return $this->update($user);
         }
+        return $this->update($user);
     }
 
     private function insert(User $user): int
@@ -48,7 +47,7 @@ class UserMapper extends AbstractMapper
         return $row;
     }
 
-    private function update(User $user):int
+    private function update(User $user): int
     {
         //TODO: transform user to array row then prepare an UPDATE ($this->getPdo()) and execute
         $row = $this->translateToArray($user);
