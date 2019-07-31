@@ -9,10 +9,10 @@ abstract class RendererTemplate
     private const HEADER_FILE = 'src/View/Templates/headerFile.php';
     private const FOOTER_FILE = 'src/View/Templates/footerFile.php';
 
-    public function render(array $array = null)
+    public function render(array $array = [])
     {
         require "" . self::HEADER_FILE . "";
-        $this->ownRender();
+        $this->ownRender($array);
         require "" . self::FOOTER_FILE . "";
     }
 

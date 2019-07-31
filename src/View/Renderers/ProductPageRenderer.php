@@ -4,11 +4,11 @@
 namespace MyApp\View\Renderers;
 
 
-class ProductPageRenderer
+class ProductPageRenderer extends RendererTemplate
 {
     private const PRODUCT_PAGE_HTML_FILE = 'src/View/Templates/product-page.php';
 
-    public static function render(array $error = [])
+    public function ownRender(array $error = [])
     {
         require_once "" . self::PRODUCT_PAGE_HTML_FILE . "";
     }

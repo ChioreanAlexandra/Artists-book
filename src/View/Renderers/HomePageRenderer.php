@@ -10,7 +10,6 @@ class HomePageRenderer extends RendererTemplate
 
     public function ownRender(array $productList = [])
     {
-        echo "this is product list";
         require_once "".self::HOME_PAGE_HTML_FILE."";
     }
 
