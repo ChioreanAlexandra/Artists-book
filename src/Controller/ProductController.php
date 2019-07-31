@@ -1,6 +1,7 @@
 <?php
 
 namespace MyApp\Controller;
+use MyApp\Model\FormMapper\TierFactory;
 use MyApp\Model\FormMapper\UploadProductFormMapper;
 use MyApp\Model\Http\Request;
 use MyApp\Model\DomainObjects\Product;
@@ -9,6 +10,7 @@ use MyApp\Model\Http\Session;
 use MyApp\Model\Http\SessionFactory;
 use MyApp\Model\Persistence\Finder\ProductFinder;
 use MyApp\Model\Persistence\Finder\TagFinder;
+use MyApp\Model\Persistence\Mapper\ProductMapper;
 use MyApp\Model\Persistence\PersistenceFactory;
 use MyApp\View\Renderers\HomePageRenderer;
 use MyApp\View\Renderers\ProductPageRenderer;
@@ -29,7 +31,9 @@ class ProductController
 
     public static function showProduct()
     {
-        ProductPageRenderer::render();
+        $renderer=new ProductPageRenderer();
+        $renderer->render();
+//        ProductPageRenderer::render();
     }
 
     public static function uploadProductPage()
@@ -38,23 +42,33 @@ class ProductController
         $tagFinder = PersistenceFactory::createFinder(Tag::class);
         /** @var array $tags */
         $tags = $tagFinder->findAll();
-        UploadProductRenderer::render($tags);
+        $renderer=new UploadProductRenderer();
+        $renderer->render($tags);
     }
 
+    private static function uploadTiers(array $tiers)
+    {
+        var_dump($tiers);
+        $tierMapper = PersistenceFactory::createMapper(Tier::class);
+        foreach ($tiers as $item)
+        {
+            $tierMapper->save($item);
+        }
+    }
     public static function uploadProduct()
     {
 
         $request=RequestFactory::createRequest();
         $session=SessionFactory::createSession();
-        var_dump($session);
         $error=[];
         /** @var UploadProductFormMapper $uploadFormMapper */
         $uploadFormMapper=new UploadProductFormMapper($request,$session);
         $product=$uploadFormMapper->createProductFromUploadForm();
-        /** @var UserMapper $userMapper */
+        /** @var ProductMapper $userMapper */
         $productMapper = PersistenceFactory::createMapper(Product::class);
         $productId=$productMapper->save($product);
-        echo $productId;
+        $tierFactory=new TierFactory();
+        self::uploadTiers($tierFactory->createAllTiersForProduct($productId));
         //header("Location:/user/profile/");
     }
 
