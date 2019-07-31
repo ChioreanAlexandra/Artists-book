@@ -29,7 +29,8 @@ class UserController
 
     public static function loginPage()
     {
-        LoginRenderer::render();
+        $renderer=new LoginRenderer();
+        $renderer->render();
     }
 
 
@@ -40,18 +41,17 @@ class UserController
 
         $loginFormMapper=new LoginFormMapper($request);
         $loginUser=$loginFormMapper->createUserFromLoginForm();
-        ///echo $loginUser;
 
         /** @var UserFinder $userFinder */
         $userFinder = PersistenceFactory::createFinder(User::class);
         /** @var User $user */
         $user = $userFinder->findByCredentials($loginUser->getEmail(), $loginUser->getPassword());
-        var_dump($user);
 
         if($user==null)
         {
             $error['error']='Email/password wrong';
-            LoginRenderer::render($error);
+            $renderer=new LoginRenderer();
+            $renderer->render($error);
             return;
         }
 
@@ -93,6 +93,6 @@ class UserController
     {
         $session=SessionFactory::createSession();
         $session->unsetSessionKey(UserField::getId());
-        header("Location:/product/showProducts");
+        header("Location:/");
     }
 }
