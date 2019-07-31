@@ -1,13 +1,15 @@
 <?php
 
 namespace MyApp\Controller;
+
+use MyApp\Model\DomainObjects\OrderItem;
+use MyApp\Model\DomainObjects\ProductTag;
 use MyApp\Model\FormMapper\TierFactory;
 use MyApp\Model\FormMapper\UploadProductFormMapper;
+use MyApp\Model\Helper\Form\UserField;
 use MyApp\Model\Http\Request;
 use MyApp\Model\DomainObjects\Product;
-use MyApp\Model\Http\RequestFactory;
 use MyApp\Model\Http\Session;
-use MyApp\Model\Http\SessionFactory;
 use MyApp\Model\Persistence\Finder\ProductFinder;
 use MyApp\Model\Persistence\Finder\TagFinder;
 use MyApp\Model\Persistence\Mapper\ProductMapper;
@@ -18,62 +20,98 @@ use MyApp\View\Renderers\UploadProductRenderer;
 
 class ProductController
 {
-    /** @var array  */
-    public static function showProducts()
+    /** @var Session */
+    private $session;
+    private $request;
+
+    public function __construct(Session $session, Request $request)
+    {
+        $this->session=$session;
+        $this->request=$request;
+    }
+
+    /** @var array */
+    public function showProducts()
     {
         /** @var ProductFinder $productFinder */
         $productFinder = PersistenceFactory::createFinder(Product::class);
         /** @var array $products */
         $products = $productFinder->findAll();
-        $renderer=new HomePageRenderer();
+        $renderer = new HomePageRenderer();
         $renderer->render($products);
     }
 
-    public static function showProduct()
+    public function showProduct(int $id)
     {
-        $renderer=new ProductPageRenderer();
-        $renderer->render();
+        /** @var ProductFinder $productFinder */
+        $productFinder = PersistenceFactory::createFinder(Product::class);
+        $product = $productFinder->findById($id);
+        $renderer = new ProductPageRenderer();
+        $renderer->render(['product' => $product]);
 //        ProductPageRenderer::render();
     }
 
-    public static function uploadProductPage()
+    public  function uploadProductPage()
     {
+        if(!$this->session->getSessionValue(UserField::getId()))
+        {
+            header("Location:/product/showProducts");
+        }
         /** @var TagFinder $tagFinder */
         $tagFinder = PersistenceFactory::createFinder(Tag::class);
         /** @var array $tags */
         $tags = $tagFinder->findAll();
-        $renderer=new UploadProductRenderer();
+        $renderer = new UploadProductRenderer();
         $renderer->render($tags);
     }
 
-    private static function uploadTiers(array $tiers)
+    /**
+     * gets user submitted product data, creates product, creates product tags
+     * creates tiers
+     */
+    public function uploadProduct()
+    {
+        /** @var UploadProductFormMapper $uploadFormMapper */
+        $uploadFormMapper = new UploadProductFormMapper($this->request, $this->session);
+        $product = $uploadFormMapper->createProductFromUploadForm();
+
+        /** @var ProductMapper $userMapper */
+        $productMapper = PersistenceFactory::createMapper(Product::class);
+        $productId = $productMapper->save($product);
+        self::uploadProductTag($productId, $product->getTags());
+        $tierFactory = new TierFactory();
+        self::uploadTiers($tierFactory->createAllTiersForProduct($productId));
+        header("Location:/user/profile/");
+    }
+
+    private  function uploadProductTag(int $productId, array $tags)
+    {
+        $productTag = PersistenceFactory::createMapper(ProductTag::class);
+        foreach ($tags as $item) {
+            $productTag->save($productId, $item);
+        }
+    }
+
+    private function uploadTiers(array $tiers)
     {
         $tierMapper = PersistenceFactory::createMapper(Tier::class);
-        foreach ($tiers as $item)
-        {
+        foreach ($tiers as $item) {
             $tierMapper->save($item);
         }
     }
-    public static function uploadProduct()
+
+    public function buyProduct(int $idProduct)
     {
 
-        $request=RequestFactory::createRequest();
-        $session=SessionFactory::createSession();
-        $error=[];
-        /** @var UploadProductFormMapper $uploadFormMapper */
-        $uploadFormMapper=new UploadProductFormMapper($request,$session);
-        $product=$uploadFormMapper->createProductFromUploadForm();
-        /** @var ProductMapper $userMapper */
-        $productMapper = PersistenceFactory::createMapper(Product::class);
-        $productId=$productMapper->save($product);
-        $tierFactory=new TierFactory();
-        self::uploadTiers($tierFactory->createAllTiersForProduct($productId));
-        //header("Location:/user/profile/");
-    }
-
-    public static function buyProduct()
-    {
-        echo 'on buy';
+        if(!$this->session->getSessionValue(UserField::getId()))
+        {
+            $this->session->setSessionValue('lastViewedProductId',$idProduct);
+            header("Location:/user/loginPage");
+        }
+        $idTierToByBought=$this->request->getPost()['tierId'];
+        $idUser=$this->session->getSessionValue(UserField::getId());
+        $orderMapper=PersistenceFactory::createMapper(OrderItem::class);
+        $orderMapper->save(new OrderItem($idTierToByBought,$idUser,new \DateTime('now')));
         //require_once("src/View/Templates/home-page.php");git +
     }
 

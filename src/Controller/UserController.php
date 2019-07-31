@@ -24,75 +24,82 @@ use MyApp\Model\Persistence\Finder\AbstractFinder;
 
 class UserController
 {
-    /** @var array */
-    public static $error;
+    private $session;
+    private $request;
 
-    public static function loginPage()
+    public function __construct(Session $session, Request $request)
     {
-        $renderer=new LoginRenderer();
+        $this->session=$session;
+        $this->request=$request;
+    }
+
+    public function loginPage()
+    {
+        $renderer = new LoginRenderer();
         $renderer->render();
     }
 
 
-    public static function login()
+    public function login()
     {
-        $request=RequestFactory::createRequest();
-        $error=[];
+        $error = [];
 
-        $loginFormMapper=new LoginFormMapper($request);
-        $loginUser=$loginFormMapper->createUserFromLoginForm();
+        $loginFormMapper = new LoginFormMapper($this->request);
+        $loginUser = $loginFormMapper->createUserFromLoginForm();
 
         /** @var UserFinder $userFinder */
         $userFinder = PersistenceFactory::createFinder(User::class);
         /** @var User $user */
         $user = $userFinder->findByCredentials($loginUser->getEmail(), $loginUser->getPassword());
 
-        if($user==null)
-        {
-            $error['error']='Email/password wrong';
-            $renderer=new LoginRenderer();
+        if ($user == null) {
+            $error['error'] = 'Email/password wrong';
+            $renderer = new LoginRenderer();
             $renderer->render($error);
             return;
         }
+        $this->session->setSessionValue(UserField::getId(), $user->getId());
+        $lastViewedProductId = $this->session->getSessionValue('lastViewedProductId');
+        if (!is_null($lastViewedProductId)) {
 
-        $session=SessionFactory::createSession();
-        $session->setSessionValue(UserField::getId(),$user->getId());
+            $this->session->unsetSessionKey('lastViewedProductId');
+            header('Location:/product/showProduct/' . $lastViewedProductId);
+            return;
+        }
         header('Location:/user/profile');
 
     }
 
-    public static function registerPage()
+    public function registerPage()
     {
-        $renderer=new RegisterRenderer();
+        $renderer = new RegisterRenderer();
         $renderer->render();
     }
 
-    public static function register()
+    public function register()
     {
-        $request=RequestFactory::createRequest();
-        $error=[];
-        $registerFormMapper=new RegisterFormMapper($request);
-        $registerUser=$registerFormMapper->createUserFromRegisterForm();
+        $error = [];
+        $registerFormMapper = new RegisterFormMapper($this->request);
+        $registerUser = $registerFormMapper->createUserFromRegisterForm();
         /** @var UserMapper $userMapper */
         $userMapper = PersistenceFactory::createMapper(User::class);
-        $userId=$userMapper->save($registerUser);
-        $session=SessionFactory::createSession();
-        $session->setSessionValue(UserField::getId(),$userId);
+        $userId = $userMapper->save($registerUser);
+        $session = SessionFactory::createSession();
+        $session->setSessionValue(UserField::getId(), $userId);
         var_dump($session->getSession());
         require_once("src/View/Templates/profile-page.php");
     }
 
-    public static function profile()
+    public function profile()
     {
-        $renderer=new ProfilePageRenderer();
+        $renderer = new ProfilePageRenderer();
         $renderer->render();
-
-        //require_once("src/View/Templates/profile-page.php");
     }
-    public static function logout()
+
+    public function logout()
     {
-        $session=SessionFactory::createSession();
+        $session = SessionFactory::createSession();
         $session->unsetSessionKey(UserField::getId());
-        header("Location:/");
+        header("Location:/product/showProducts");
     }
 }
