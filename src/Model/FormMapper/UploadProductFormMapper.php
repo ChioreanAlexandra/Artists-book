@@ -29,12 +29,12 @@ class UploadProductFormMapper
         }
         $id=$this->session->getSession()[UserField::getId()];
         return new Product( $id,
-                            $this->request->getPost()[ProductField::getImageTitleField()],
-                            $this->request->getPost()[ProductField::getImageDescriptionField()],
-                            $this->request->getPost()[ProductField::getCameraSpecsField()],
-                            new \DateTime($this->request->getPost()[ProductField::getCaptureDate()]),
-                            'thumbnail',
-                            $this->request->getPost()[ProductField::getTagField()]);
+            $this->request->getPost()[ProductField::getImageTitleField()],
+            $this->request->getPost()[ProductField::getImageDescriptionField()],
+            $this->request->getPost()[ProductField::getCameraSpecsField()],
+            new \DateTime($this->request->getPost()[ProductField::getCaptureDate()]),
+            'thumbnail',
+            $this->request->getPost()[ProductField::getTagField()]);
     }
 
 }
