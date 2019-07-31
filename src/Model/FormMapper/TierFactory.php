@@ -27,8 +27,10 @@ class TierFactory
     public function createTier(int $productId, string $inputFile, string $size, float $price, string $extension = 'jpg')
     {
 
-        $outputPath = sprintf("%s/%s.%s", ImageFields::getImagesDirectory(), uniqid(), $extension);
-        $outputPathWM = sprintf("%s/%s.%s", ImageFields::getImagesDirectory(), uniqid(), $extension);
+        $outputPath = $inputFile;
+        $outputPathWM=$inputFile;
+//        $outputPath = sprintf("%s/%s.%s", ImageFields::getImagesDirectory(), uniqid(), $extension);
+//        $outputPathWM = sprintf("%s/%s.%s", ImageFields::getImagesDirectory(), uniqid(), $extension);
         // $this->processImage();
         return new Tier($productId, $size, $price, $outputPathWM, $outputPath, null);
     }

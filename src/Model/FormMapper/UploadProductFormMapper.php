@@ -5,6 +5,7 @@ namespace MyApp\Model\FormMapper;
 
 
 use MyApp\Model\DomainObjects\Product;
+use MyApp\Model\Helper\Form\ImageFields;
 use MyApp\Model\Helper\Form\ProductField;
 use MyApp\Model\Helper\Form\UserField;
 use MyApp\Model\Http\Request;
@@ -33,7 +34,7 @@ class UploadProductFormMapper
             $this->request->getPost()[ProductField::getImageDescriptionField()],
             $this->request->getPost()[ProductField::getCameraSpecsField()],
             new \DateTime($this->request->getPost()[ProductField::getCaptureDate()]),
-            'thumbnail',
+            $_FILES[ImageFields::getImageTag()][ImageFields::getImageTemporaryLocation()],
             $this->request->getPost()[ProductField::getTagField()]);
     }
 
