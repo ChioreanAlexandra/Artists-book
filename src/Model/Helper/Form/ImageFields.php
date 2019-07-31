@@ -9,7 +9,7 @@ class ImageFields
     private const IMAGE_TAG='image';
     private const TEMP_FILE_LOCATION ='tmp_name';
     private const IMAGE_FILE_NAME='name';
-    private const IMAGES_DIRECTORY='src/images';
+    private const IMAGES_DIRECTORY='images';
 
     public static function getImageTag():string
     {
