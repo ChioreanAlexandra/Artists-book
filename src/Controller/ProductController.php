@@ -46,8 +46,11 @@ class ProductController
         /** @var ProductFinder $productFinder */
         $productFinder = PersistenceFactory::createFinder(Product::class);
         $product = $productFinder->findById($id);
+        /** @var TagFinder $tagFinder */
+        $tagFinder= PersistenceFactory::createFinder(Tag::class);
+        $tags=$tagFinder->findByProductId($id);
         $renderer = new ProductPageRenderer();
-        $renderer->render(['product' => $product]);
+        $renderer->render(['product' => $product, 'tag'=>$tags]);
 //        ProductPageRenderer::render();
     }
 
@@ -81,7 +84,7 @@ class ProductController
         self::uploadProductTag($productId, $product->getTags());
         $tierFactory = new TierFactory();
         self::uploadTiers($tierFactory->createAllTiersForProduct($productId));
-        header("Location:/user/profile/");
+        header("Location:/product/showProducts/");
     }
 
     private  function uploadProductTag(int $productId, array $tags)
