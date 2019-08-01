@@ -19,10 +19,11 @@ class TierFinder extends AbstractFinder
             $row[TierFields::getPathWithWMField()],
             $row[TierFields::getPathWithoutWMField()],
             $row[TierFields::getIdField()]
-            );
+        );
         return $tier;
     }
-    public function findByProductId(int $id): array
+
+    public function findByProductId(int $id): ?array
     {
         $sql = "select * from tier where product_id=:id";
         $statement = $this->getPdo()->prepare($sql);
@@ -37,6 +38,21 @@ class TierFinder extends AbstractFinder
             $listOfTiers[$tier['size']] = $this->translateToTier($tier);
         }
         return $listOfTiers;
+    }
 
+    public function findByUserId(int $idUser): ?array
+    {
+        $sql = "select * from tier where tier.id in (select order_item.tier_id from order_item inner join user on order_item.user_id=user.id where user.id=?)";
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->execute(array($idUser));
+        $row = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        $listOfTiers = [];
+        foreach ($row as $tier) {
+            $listOfTiers[] = $this->translateToTier($tier);
+        }
+        return $listOfTiers;
     }
 }
