@@ -8,7 +8,7 @@ class UserProductsRenderer extends RendererTemplate
 {
     private const USER_PRODUCT_PAGE_HTML_FILE='src/View/Templates/user-products-page.php';
 
-    public function ownRender(array $productList = [])
+    public function ownRender(array $productList = null)
     {
         require_once "".self::USER_PRODUCT_PAGE_HTML_FILE."";
     }

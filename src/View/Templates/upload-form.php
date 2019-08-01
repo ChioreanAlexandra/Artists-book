@@ -53,17 +53,6 @@
             <?php foreach($tags as $option):?>
             <option><?php  echo $option->getTagName();?></option>
             <?php endforeach; ?>
-            <!--
-            <option>Adventure Photography</option>
-            <option>Astrophotography</option>
-            <option>Black and White Photography</option>
-            <option>Cityscape Photography</option>
-            <option>Creative Photography</option>
-            <option>Family Photography</option>
-            <option>Fine Art Photography</option>
-            <option>Infrared Photography</option>
-            <option>Landscape Photography</option>
-            <option>Milky Way Photography</option>-->
         </select>
         <br/>
 

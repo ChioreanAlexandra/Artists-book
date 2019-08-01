@@ -6,7 +6,6 @@
     </div>
     <!-- Copyright -->
 </footer>
-</div>
 <!-- Footer -->
 </body>
 </html>

@@ -8,7 +8,7 @@ class HomePageRenderer extends RendererTemplate
 {
     private const HOME_PAGE_HTML_FILE='src/View/Templates/home-page.php';
 
-    public function ownRender(array $productList = [])
+    public function ownRender(array $productList = null)
     {
         require_once "".self::HOME_PAGE_HTML_FILE."";
     }
