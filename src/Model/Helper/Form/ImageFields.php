@@ -9,7 +9,8 @@ class ImageFields
     private const IMAGE_TAG='image';
     private const TEMP_FILE_LOCATION ='tmp_name';
     private const IMAGE_FILE_NAME='name';
-    private const IMAGES_DIRECTORY='images';
+    public const IMAGES_DIRECTORY='images/';
+    public const WATERMARK_FILE='images/watermark/cutu.jpg';
 
     public static function getImageTag():string
     {
