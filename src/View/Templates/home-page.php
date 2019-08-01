@@ -4,6 +4,7 @@
     <h2>Image Gallery</h2>
     <div align="right">
         <form action="/product/showProduct" method="get" >
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" name="search">
             <select name="criteria" >
                 <option value="title">Title</option>
                 <option value="description">Description</option>
