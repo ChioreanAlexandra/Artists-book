@@ -89,7 +89,8 @@ class UserController
         $userId = $userMapper->save($registerUser);
         $this->session->setSessionValue(UserField::getId(), $userId);
         //var_dump($this->session->getSession());
-        require_once("src/View/Templates/home-page.php");
+        //require_once("src/View/Templates/home-page.php");
+        header('Location:/product/showProducts');
     }
 
     public function profile()
