@@ -4,7 +4,8 @@ namespace MyApp\Controller;
 
 use MyApp\Model\DomainObjects\OrderItem;
 use MyApp\Model\DomainObjects\ProductTag;
-use MyApp\Model\FormMapper\TierFactory;
+use MyApp\Model\DomainObjects\Tier;
+use MyApp\Model\FormMapper\TierManagement;
 use MyApp\Model\FormMapper\UploadProductFormMapper;
 use MyApp\Model\Helper\Form\UserField;
 use MyApp\Model\Http\Request;
@@ -14,6 +15,7 @@ use MyApp\Model\Persistence\Finder\ProductFinder;
 use MyApp\Model\Persistence\Finder\TagFinder;
 use MyApp\Model\Persistence\Mapper\ProductMapper;
 use MyApp\Model\Persistence\PersistenceFactory;
+use MyApp\Model\Utilities\DownloadClass;
 use MyApp\View\Renderers\HomePageRenderer;
 use MyApp\View\Renderers\ProductPageRenderer;
 use MyApp\View\Renderers\UploadProductRenderer;
@@ -82,9 +84,10 @@ class ProductController
         $productMapper = PersistenceFactory::createMapper(Product::class);
         $productId = $productMapper->save($product);
         self::uploadProductTag($productId, $product->getTags());
-        $tierFactory = new TierFactory();
-        self::uploadTiers($tierFactory->createAllTiersForProduct($productId));
-        header("Location:/product/showProducts/");
+        $tierManagement = new TierManagement();
+        self::uploadTiers($tierManagement->createAllTiersForProduct($productId));
+        $tierManagement->createThumbNail($product->getThumbnailPath());
+        header("Location:/");
     }
 
     private  function uploadProductTag(int $productId, array $tags)
@@ -102,6 +105,19 @@ class ProductController
             $tierMapper->save($item);
         }
     }
+    private function getFileToByDownloaded(int $id)
+    {
+        $tierFinder=PersistenceFactory::createFinder(Tier::class);
+        /** @var Tier $tier */
+        $tier=$tierFinder->findById($id);
+        return $tier->getPathWithoutWatermark();
+    }
+
+    private function startDownload(string $fileName)
+    {
+        $downloader=new DownloadClass($fileName);
+        $downloader->startDownload();
+    }
 
     public function buyProduct(int $idProduct)
     {
@@ -115,6 +131,8 @@ class ProductController
         $idUser=$this->session->getSessionValue(UserField::getId());
         $orderMapper=PersistenceFactory::createMapper(OrderItem::class);
         $orderMapper->save(new OrderItem($idTierToByBought,$idUser,new \DateTime('now')));
+        $this->startDownload($this->getFileToByDownloaded($idTierToByBought));
+
         //require_once("src/View/Templates/home-page.php");git +
     }
 
