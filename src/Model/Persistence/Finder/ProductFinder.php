@@ -52,13 +52,15 @@ class ProductFinder extends AbstractFinder
         return $this->translateToProduct($row);
 
     }
-    public function getTiersById(int $id):?array
+
+    public function getTiersById(int $id): ?array
     {
         /** @var TierFinder $tierFinder */
-        $tierFinder=PersistenceFactory::createFinder(Tier::class);
+        $tierFinder = PersistenceFactory::createFinder(Tier::class);
         return $tierFinder->findByProductId($id);
     }
-    public function findByUserId(int $userId):?array
+
+    public function findByUserId(int $userId): ?array
     {
         $sql = "select * from product where user_id=:user_id";
         $statement = $this->getPdo()->prepare($sql);
@@ -74,11 +76,12 @@ class ProductFinder extends AbstractFinder
         }
         return $listOfProducts;
     }
-    public function findBy(string $criteria='title', string $order)
-    {
-        $sql = "select * from product order by ".$criteria.' '.$order;
-        $statement = $this->getPdo()->prepare($sql);
 
+    public function findBy(string $criteria = 'title', string $order, string $search = null): ?array
+    {
+        $sql = $search !== null ? "select * from product where title like '%" . $search . "%' order by " . $criteria . " " . $order
+            : "select * from product order by " . $criteria . " " . $order;
+        $statement = $this->getPdo()->prepare($sql);
         $statement->execute();
         $row = $statement->fetchAll(PDO::FETCH_ASSOC);
         if (!$row) {
