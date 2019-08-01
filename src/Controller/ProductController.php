@@ -41,7 +41,8 @@ class ProductController
 
         $criteria = isset($this->request->getGet()['criteria']) ? $this->request->getGet()['criteria'] : 'title';
         $order = isset($this->request->getGet()['order']) ? $this->request->getGet()['order'] : '';
-        $products = $productFinder->findBy($criteria, $order);
+        $search = isset($this->request->getGet()['search']) ? $this->request->getGet()['search'] : null;
+        $products = $productFinder->findBy($criteria, $order, $search);
         $renderer = new HomePageRenderer();
         $renderer->render($products);
     }
