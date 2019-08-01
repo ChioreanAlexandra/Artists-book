@@ -28,4 +28,16 @@ class TagFinder extends AbstractFinder
         }
         return $listOfTags;
     }
+    public function findByProductId(int $idProduct):array
+    {
+        $sql = "select * from tag where tag.id in (select product_tag.tag_id from product_tag inner join product on product_tag.product_id=product.id where product.id=?)";
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->execute(array($idProduct));
+        $row = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $listOfTags = [];
+        foreach ($row as $tag) {
+            $listOfTags[] = $this->translateToTag($tag);
+        }
+        return $listOfTags;
+    }
 }
