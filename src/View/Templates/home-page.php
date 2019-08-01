@@ -3,16 +3,15 @@
 <div class="container">
     <h2>Image Gallery</h2>
     <div align="right">
-        <form action="/product/showProduct" method="post" >
+        <form action="/product/showProduct" method="get" >
             <select name="criteria" >
-                <option>Title</option>
-                <option>Description</option>
-                <option>Capture data</option>
-                <option>Price</option>
+                <option value="title">Title</option>
+                <option value="description">Description</option>
+                <option value="capture_data">Capture data</option>
             </select>
             <select name="order" >
-                <option>Ascending</option>
-                <option>Descending</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
             </select>
             <input class="btn btn-primary" type="submit" value="Search">
         </form>
