@@ -20,12 +20,12 @@
 
         <br/>
         <br/>
-        <label for="cameraSpecs">Camera specifications</label><br/>
+        <label for="cameraSpecs" style="color: gainsboro">Camera specifications </label><br/>
         <input id="imageDescription" type="text" placeholder="Enter the camera specifications" name="camera_specs"/>
 
         <br/>
         <br/>
-        <label for="imagePrice">Price</label><br/>
+        <label for="imagePrice" style="color: gainsboro">Price</label><br/>
         <input id="imagePrice" type="number" placeholder="Enter large tier" name="priceLargeTier" step="0.01" min="0">
         <input id="imagePrice" type="number" placeholder="Enter medium tier" name="priceMediumTier" step="0.01" min="0">
         <input id="imagePrice" type="number" placeholder="Enter small tier" name="priceSmallTier" step="0.01" min="0">
@@ -38,7 +38,7 @@
 
 
         <br/>
-        <label for="date">Capture date</label><br/>
+        <label for="date"style="color: gainsboro">Capture date</label><br/>
         <input id="date" type="date" name="capture_data">
 
         <br/>
@@ -48,7 +48,7 @@
         </div>
 
         <br/>
-        <label for="tag[]">Tags</label>
+        <label for="tag[]"style="color: gainsboro">Tags</label>
         <select name="tag[]" multiple>
             <?php foreach($tags as $option):?>
             <option><?php  echo $option->getTagName();?></option>
@@ -74,7 +74,7 @@
         <br/>
 
 
-        <label for="image">Image to be uploaded</label> &nbsp;
+        <label for="image" style="color: gainsboro">Image to be uploaded</label> &nbsp;
         <input type="file" name="image"/>
         <br/>
         <div style="color: red">
@@ -82,7 +82,7 @@
         </div>
         <br/>
         <br/>
-        <input type="submit" value="Upload form" name="submit">
+        <input class="btn btn-primary" type="submit" value="Update product">
         <div style="color: red">
             <?php //if(!empty($errorMessage))echo $errorMessage;?>
         </div>

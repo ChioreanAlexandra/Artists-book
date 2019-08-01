@@ -11,15 +11,16 @@ use \MyApp\Model\Helper\Form\UserField;
         <div style="color: red">
         </div>
         <br/>
-        <br/>
         <label for="password">Password</label><br/>
         <input id="password" type="password" placeholder="Enter password" name="password"/>
         <div style="color: red">
         </div>
-        <input type="submit" value="Login">
+        <input class="btn btn-primary" type="submit" value="Login">
         <?php if(isset($errors['error']))echo $errors['error'];?>
     </form>
-    <a href="/user/registerPage" >Register</a>
+    <br>
+    <a class="btn btn-primary" href="/user/registerPage" role="button">Register</a>
+
 
 </div>
 

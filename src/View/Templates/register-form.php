@@ -14,19 +14,14 @@
     <form action="/user/register" method="POST">
         <label for="name">Name</label><br/>
         <input id="name" type="text" placeholder="Enter name" name="name"/>
-
         <br/>
-        <br/>
-
         <label for="email">Email</label><br/>
         <input id="email" type="text" placeholder="Enter email" name="email"/>
-
-        <br/>
         <br/>
         <label for="password">Password</label><br/>
         <input id="password" type="password" placeholder="Enter password" name="password"/>
-
-        <input type="submit" value="Register">
+        <br>
+        <input class="btn btn-primary" type="submit" value="Register">
     </form>
 
 </div>
