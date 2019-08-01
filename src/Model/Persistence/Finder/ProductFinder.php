@@ -52,10 +52,31 @@ class ProductFinder extends AbstractFinder
         return $this->translateToProduct($row);
 
     }
-    public function getTiersById(int $id):array
+    public function getTiersById(int $id):?array
     {
         /** @var TierFinder $tierFinder */
         $tierFinder=PersistenceFactory::createFinder(Tier::class);
         return $tierFinder->findByProductId($id);
+    }
+    public function findByUserId(int $userId):array
+    {
+        $sql = "select * from product where user_id=:user_id";
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(ProductField::getUserIdField(), $userId);
+        $statement->execute();
+        $row = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        /*echo count($row);
+        if(count($row)===1)
+        {
+            return [$this->translateToProduct($row)];
+        }*/
+        $listOfProducts = [];
+        foreach ($row as $product) {
+            $listOfProducts[] = $this->translateToProduct($product);
+        }
+        return $listOfProducts;
     }
 }
