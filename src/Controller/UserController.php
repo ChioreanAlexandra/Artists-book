@@ -17,9 +17,12 @@ use MyApp\Model\Http\Session;
 use MyApp\Model\Validation\FormValidators\LoginFormValidator;
 use MyApp\Model\Http\Request;
 use MyApp\View\Renderers\LoginRenderer;
+use MyApp\View\Renderers\OrdersPageRenderer;
 use MyApp\View\Renderers\ProfilePageRenderer;
 use MyApp\View\Renderers\RegisterRenderer;
 use MyApp\Model\Persistence\Finder\AbstractFinder;
+use MyApp\View\Renderers\UploadProductRenderer;
+use MyApp\View\Renderers\UserProductsRenderer;
 
 
 class UserController
@@ -29,8 +32,8 @@ class UserController
 
     public function __construct(Session $session, Request $request)
     {
-        $this->session=$session;
-        $this->request=$request;
+        $this->session = $session;
+        $this->request = $request;
     }
 
     public function loginPage()
@@ -66,7 +69,7 @@ class UserController
             header('Location:/product/showProduct/' . $lastViewedProductId);
             return;
         }
-        header('Location:/user/profile');
+        header('Location:/product/showProducts');
 
     }
 
@@ -84,22 +87,52 @@ class UserController
         /** @var UserMapper $userMapper */
         $userMapper = PersistenceFactory::createMapper(User::class);
         $userId = $userMapper->save($registerUser);
-        $session = SessionFactory::createSession();
-        $session->setSessionValue(UserField::getId(), $userId);
-        var_dump($session->getSession());
-        require_once("src/View/Templates/profile-page.php");
+        $this->session->setSessionValue(UserField::getId(), $userId);
+        //var_dump($this->session->getSession());
+        require_once("src/View/Templates/home-page.php");
     }
 
     public function profile()
     {
+        if (!$this->session->getSessionValue(UserField::getId())) {
+            header("Location:/product/showProducts");
+        }
+        $userId = $this->session->getSessionValue(UserField::getId());
+        $userFinder = PersistenceFactory::createFinder(User::class);
+        /** @var User $user */
+        $user = $userFinder->findById($userId);
         $renderer = new ProfilePageRenderer();
-        $renderer->render();
+        $renderer->render(['user'=>$user]);
     }
 
     public function logout()
     {
-        $session = SessionFactory::createSession();
-        $session->unsetSessionKey(UserField::getId());
+        if (!$this->session->getSessionValue(UserField::getId())) {
+            header("Location:/product/showProducts");
+        }
+        $this->session->unsetSessionKey(UserField::getId());
         header("Location:/product/showProducts");
+    }
+
+    public function showProducts()
+    {
+        if (!$this->session->getSessionValue(UserField::getId())) {
+            header("Location:/product/showProducts");
+        }
+        $userId = $this->session->getSessionValue(UserField::getId());
+        $products=User::getProducts($userId);
+        $renderer = new UserProductsRenderer();
+        $renderer->render($products);
+    }
+
+    public function showOrders()
+    {
+        if (!$this->session->getSessionValue(UserField::getId())) {
+            header("Location:/product/showProducts");
+        }
+        $userId = $this->session->getSessionValue(UserField::getId());
+        $orders=User::getOrders($userId);
+        $renderer = new OrdersPageRenderer();
+        $renderer->render($orders);
     }
 }
