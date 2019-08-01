@@ -14,5 +14,5 @@ function showError(string $errorText)
 
 function showSuccess(string $path)
 {
-    echo 'Your image have been successfully edited. You can find it at: '.$path.PHP_EOL;
+   // echo 'Your image have been successfully edited. You can find it at: '.$path.'<br>';
 }

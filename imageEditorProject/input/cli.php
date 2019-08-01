@@ -15,6 +15,5 @@ function readArguments(array $argv):array
         preg_match(COMMAND_VALUE_PATTERN,$item,$matches);
         $payload1[$matches['key']]=$matches['value'];
     }
-
     return $payload1;
 }

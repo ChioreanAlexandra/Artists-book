@@ -1,9 +1,9 @@
 <?php
-const PIXEL_PATTERN='/^\d+$/';
-const VALUE_PATTERN='/\d+:\d+/';
-const VALIDATE_EXTENSION_PATTERN='/\.(?<ext>\w+)/';
-const ARGUMENTS_NAME=['--input-file','--output-file','--width','--height','--watermark','--format','--help'];
-const PATH_PATTERN='/(?<path>.*\/)/';
+const PIXEL_PATTERN = '/^\d+$/';
+const VALUE_PATTERN = '/\d+:\d+/';
+const VALIDATE_EXTENSION_PATTERN = '/\.(?<ext>\w+)/';
+const ARGUMENTS_NAME = ['--input-file', '--output-file', '--width', '--height', '--watermark', '--format', '--help'];
+const PATH_PATTERN = '/(?<path>.*\/)/';
 
 /**
  * @param array $payload
@@ -13,14 +13,12 @@ const PATH_PATTERN='/(?<path>.*\/)/';
 function validateCommand(array $payload): array
 {
     $errors = [];
-    if(!validateParameters($payload))
-    {
-        $errors['Parameters name']='Parameter does not exist. Please check --help';
+    if (!validateParameters($payload)) {
+        $errors['Parameters name'] = 'Parameter does not exist. Please check --help';
         return $errors;
     }
-    if(!isset($payload[INPUT_FILE]) && !isset($payload[OUTPUT_FILE]))
-    {
-        $errors['Mandatory parameters']='Input and output files are mandatory';
+    if (!isset($payload[INPUT_FILE]) && !isset($payload[OUTPUT_FILE])) {
+        $errors['Mandatory parameters'] = 'Input and output files are mandatory';
         return $errors;
     }
     if (!validatePath($payload[INPUT_FILE])) {
@@ -29,26 +27,27 @@ function validateCommand(array $payload): array
     /*
      * because the output file may not exist we check only the path of it.
      */
-    preg_match(PATH_PATTERN,$payload[OUTPUT_FILE],$match);
+    preg_match(PATH_PATTERN, $payload[OUTPUT_FILE], $match);
     if (isset($match['path']) && !validatePath($match['path'])) {
         $errors[OUTPUT_FILE] = 'Your output file path is invalid.';
     }
-    if (isset($payload[WATERMARK]) &&!validatePath($payload[WATERMARK])) {
+    if (isset($payload[WATERMARK]) && !validatePath($payload[WATERMARK])) {
         $errors[WATERMARK] = 'Your watermark file path is invalid.';
     }
-    if (isset($payload[WIDTH]) &&!validatePixel($payload[WIDTH])) {
+    if (isset($payload[WIDTH]) && !validatePixel($payload[WIDTH])) {
         $errors[WIDTH] = 'The width value must be a number.';
     }
-    if (isset($payload[HEIGHT]) &&!validatePixel($payload[HEIGHT])) {
+    if (isset($payload[HEIGHT]) && !validatePixel($payload[HEIGHT])) {
         $errors[HEIGHT] = 'The height value must be a number.';
     }
     if (isset($payload[FORMAT]) && !validateFormat($payload[FORMAT])) {
-        $errors[FORMAT ]= 'The format value must have this format X:Y.';
+        $errors[FORMAT] = 'The format value must have this format X:Y.';
     }
+   // var_dump($payload[INPUT_FILE]);
     if (!validateFileType($payload[INPUT_FILE])) {
         $errors['input-file-extesion'] = 'The image extansion of the input file is not supported.';
     }
-    if (isset($payload[WATERMARK]) &&!validateFileType($payload[WATERMARK])) {
+    if (isset($payload[WATERMARK]) && !validateFileType($payload[WATERMARK])) {
         $errors['watermark-extension'] = 'Your watermark file type is invalid.';
     }
     if (!validateOutputExtension($payload[OUTPUT_FILE])) {
@@ -67,10 +66,8 @@ function validateCommand(array $payload): array
 function validateParameters($payload)
 {
 
-    foreach ($payload as $key=>$value)
-    {
-        if(!in_array($key,ARGUMENTS_NAME))
-        {
+    foreach ($payload as $key => $value) {
+        if (!in_array($key, ARGUMENTS_NAME)) {
             return false;
         }
     }
@@ -96,7 +93,7 @@ function validatePath(string $path): bool
  */
 function validatePixel(string $pixelValue): bool
 {
-    return preg_match(PIXEL_PATTERN,$pixelValue)==1;
+    return preg_match(PIXEL_PATTERN, $pixelValue) == 1;
 }
 
 /**
@@ -107,7 +104,7 @@ function validatePixel(string $pixelValue): bool
  */
 function validateFormat(string $formatValue): bool
 {
-    return preg_match(VALUE_PATTERN,$formatValue)==1;
+    return preg_match(VALUE_PATTERN, $formatValue) == 1;
 }
 
 /**
@@ -117,13 +114,13 @@ function validateFormat(string $formatValue): bool
  */
 function validateFileType(string $path): bool
 {
-    if(!file_exists($path))
-    {
+    if (!file_exists($path)) {
         return false;
     }
-    $type=mime_content_type($path);
-    preg_match('/image\/(?<type>\w+)/',$type,$match);
-    if(!empty($match['type']))
+    $type = mime_content_type($path);
+   // var_dump($type, $path);
+    preg_match('/image\/(?<type>\w+)/', $type, $match);
+    if (!empty($match['type']))
         return validateExtension($match['type']);
     return false;
 }
@@ -134,10 +131,10 @@ function validateFileType(string $path): bool
  * @param string $extension
  * @return bool
  */
-function validateExtension(string $extension):bool
+function validateExtension(string $extension): bool
 {
-    $extensionType=['jpg','jpeg','png'];
-    return in_array($extension,$extensionType);
+    $extensionType = ['jpg', 'jpeg', 'png'];
+    return in_array($extension, $extensionType);
 }
 
 /**
@@ -148,6 +145,6 @@ function validateExtension(string $extension):bool
  */
 function validateOutputExtension(string $path)
 {
-    preg_match(VALIDATE_EXTENSION_PATTERN,$path,$match);
+    preg_match(VALIDATE_EXTENSION_PATTERN, $path, $match);
     return validateExtension($match['ext']);
 }

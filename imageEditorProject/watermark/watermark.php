@@ -42,7 +42,6 @@ function addWatermark(array $payload): array
         return $payload;
     }
     /**@var \Imagick $image */
-
     $image = $payload[IMAGE];
     $watermarkImage = new Imagick($payload[WATERMARK]);
     $watermarkImage->scaleImage($image->getImageWidth()/SCALE_VALUE,$image->getImageHeight()/SCALE_VALUE);

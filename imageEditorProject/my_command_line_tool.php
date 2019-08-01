@@ -17,15 +17,14 @@ $payload1=readArguments($argv);
 
 if(isHelp($payload1))
 {
-    showHelp();
+    //showHelp();
     exit();
 }
 $payload9=validateCommand($payload1);
 if(!empty($payload9))
 {
-    showError(arrayToString($payload9));
+   // showError(convertsErrorArrayToString($payload9));
     exit();
-
 }
 $payload2=readImage($payload1);
 $payload3=executeWidth($payload2);
@@ -33,5 +32,5 @@ $payload3=executeHeight($payload3);
 $payload3=executeFormat($payload3);
 $payload4=addWatermark($payload3);
 $payload5=saveImageToFile($payload4);
-showSuccess($payload5);
+//showSuccess($payload5);
 
