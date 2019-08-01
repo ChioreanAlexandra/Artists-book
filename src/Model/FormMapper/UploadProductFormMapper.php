@@ -4,7 +4,9 @@
 namespace MyApp\Model\FormMapper;
 
 
+use Imagick;
 use MyApp\Model\DomainObjects\Product;
+use MyApp\Model\Editor\EditorFactory;
 use MyApp\Model\Helper\Form\ImageFields;
 use MyApp\Model\Helper\Form\ProductField;
 use MyApp\Model\Helper\Form\UserField;
@@ -21,7 +23,6 @@ class UploadProductFormMapper
         $this->request=$request;
         $this->session=$session;
     }
-
     public function createProductFromUploadForm():?Product
     {
         if(!$this->request->getPost() || !isset($this->session->getSession()[UserField::getId()]))
@@ -29,12 +30,14 @@ class UploadProductFormMapper
             return null;
         }
         $id=$this->session->getSession()[UserField::getId()];
+
+        //$savedFile=$this->saveImage($_FILES[ImageFields::getImageTag()][ImageFields::getImageTemporaryLocation()]);
         return new Product( $id,
             $this->request->getPost()[ProductField::getImageTitleField()],
             $this->request->getPost()[ProductField::getImageDescriptionField()],
             $this->request->getPost()[ProductField::getCameraSpecsField()],
             new \DateTime($this->request->getPost()[ProductField::getCaptureDate()]),
-            $_FILES[ImageFields::getImageTag()][ImageFields::getImageTemporaryLocation()],
+            sprintf("%s.%s", uniqid(), 'jpg'),
             $this->request->getPost()[ProductField::getTagField()]);
     }
 
