@@ -55,4 +55,16 @@ class TierFinder extends AbstractFinder
         }
         return $listOfTiers;
     }
+    public function findById(int $id): ?Tier
+    {
+        $sql = "select * from tier where tier.id =?";
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->execute(array($id));
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+       // var_dump($row); die;
+        return $this->translateToTier($row);
+    }
 }
