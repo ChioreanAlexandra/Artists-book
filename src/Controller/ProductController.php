@@ -28,8 +28,8 @@ class ProductController
 
     public function __construct(Session $session, Request $request)
     {
-        $this->session=$session;
-        $this->request=$request;
+        $this->session = $session;
+        $this->request = $request;
     }
 
     /** @var array */
@@ -38,7 +38,10 @@ class ProductController
         /** @var ProductFinder $productFinder */
         $productFinder = PersistenceFactory::createFinder(Product::class);
         /** @var array $products */
-        $products = $productFinder->findAll();
+
+        $criteria = isset($this->request->getGet()['criteria']) ? $this->request->getGet()['criteria'] : 'title';
+        $order = isset($this->request->getGet()['order']) ? $this->request->getGet()['order'] : '';
+        $products = $productFinder->findBy($criteria, $order);
         $renderer = new HomePageRenderer();
         $renderer->render($products);
     }
@@ -49,17 +52,16 @@ class ProductController
         $productFinder = PersistenceFactory::createFinder(Product::class);
         $product = $productFinder->findById($id);
         /** @var TagFinder $tagFinder */
-        $tagFinder= PersistenceFactory::createFinder(Tag::class);
-        $tags=$tagFinder->findByProductId($id);
+        $tagFinder = PersistenceFactory::createFinder(Tag::class);
+        $tags = $tagFinder->findByProductId($id);
         $renderer = new ProductPageRenderer();
-        $renderer->render(['product' => $product, 'tag'=>$tags]);
+        $renderer->render(['product' => $product, 'tag' => $tags]);
 //        ProductPageRenderer::render();
     }
 
-    public  function uploadProductPage()
+    public function uploadProductPage()
     {
-        if(!$this->session->getSessionValue(UserField::getId()))
-        {
+        if (!$this->session->getSessionValue(UserField::getId())) {
             header("Location:/product/showProducts");
         }
         /** @var TagFinder $tagFinder */
@@ -90,7 +92,7 @@ class ProductController
         header("Location:/");
     }
 
-    private  function uploadProductTag(int $productId, array $tags)
+    private function uploadProductTag(int $productId, array $tags)
     {
         $productTag = PersistenceFactory::createMapper(ProductTag::class);
         foreach ($tags as $item) {
@@ -105,35 +107,35 @@ class ProductController
             $tierMapper->save($item);
         }
     }
-    private function getFileToByDownloaded(int $id)
-    {
-        $tierFinder=PersistenceFactory::createFinder(Tier::class);
-        /** @var Tier $tier */
-        $tier=$tierFinder->findById($id);
-        return $tier->getPathWithoutWatermark();
-    }
-
-    private function startDownload(string $fileName)
-    {
-        $downloader=new DownloadClass($fileName);
-        $downloader->startDownload();
-    }
 
     public function buyProduct(int $idProduct)
     {
 
-        if(!$this->session->getSessionValue(UserField::getId()))
-        {
-            $this->session->setSessionValue('lastViewedProductId',$idProduct);
+        if (!$this->session->getSessionValue(UserField::getId())) {
+            $this->session->setSessionValue('lastViewedProductId', $idProduct);
             header("Location:/user/loginPage");
         }
-        $idTierToByBought=$this->request->getPost()['tierId'];
-        $idUser=$this->session->getSessionValue(UserField::getId());
-        $orderMapper=PersistenceFactory::createMapper(OrderItem::class);
-        $orderMapper->save(new OrderItem($idTierToByBought,$idUser,new \DateTime('now')));
+        $idTierToByBought = $this->request->getPost()['tierId'];
+        $idUser = $this->session->getSessionValue(UserField::getId());
+        $orderMapper = PersistenceFactory::createMapper(OrderItem::class);
+        $orderMapper->save(new OrderItem($idTierToByBought, $idUser, new \DateTime('now')));
         $this->startDownload($this->getFileToByDownloaded($idTierToByBought));
 
         //require_once("src/View/Templates/home-page.php");git +
+    }
+
+    private function startDownload(string $fileName)
+    {
+        $downloader = new DownloadClass($fileName);
+        $downloader->startDownload();
+    }
+
+    private function getFileToByDownloaded(int $id)
+    {
+        $tierFinder = PersistenceFactory::createFinder(Tier::class);
+        /** @var Tier $tier */
+        $tier = $tierFinder->findById($id);
+        return $tier->getPathWithoutWatermark();
     }
 
 }
