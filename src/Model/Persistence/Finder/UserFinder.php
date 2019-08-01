@@ -28,4 +28,18 @@ class UserFinder extends AbstractFinder
         }
         return $this->translateToUser($row);
     }
+    public function findById(int $id): ?User
+    {
+
+        // TODO: you can extract the table name in a constant, or a getter function, or config
+        $sql = "select * from user where id=?";
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(1, $id, PDO::PARAM_INT);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (!$row ) {
+            return null;
+        }
+        return $this->translateToUser($row);
+    }
 }
