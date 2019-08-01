@@ -74,12 +74,11 @@ class ProductFinder extends AbstractFinder
         }
         return $listOfProducts;
     }
-    public function findBy(string $criteria, string $order)
+    public function findBy(string $criteria='title', string $order)
     {
-        $sql = "select * from product order by :criteria :order";
+        $sql = "select * from product order by ".$criteria.' '.$order;
         $statement = $this->getPdo()->prepare($sql);
-        $statement->bindValue('criteria', $criteria);
-        $statement->bindValue('order', $order);
+
         $statement->execute();
         $row = $statement->fetchAll(PDO::FETCH_ASSOC);
         if (!$row) {
