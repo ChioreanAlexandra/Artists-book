@@ -2,6 +2,8 @@
 
 namespace MyApp\Model\DomainObjects;
 
+use MyApp\Model\Persistence\PersistenceFactory;
+
 class User
 {
     /** @var int */
@@ -70,7 +72,17 @@ class User
     }
 
     //TODO:getOrders();
-    //TODO:getProducts();
+    public static function getProducts(int $userId)
+    {
+        $productMapper=PersistenceFactory::createFinder(Product::class);
+        return $productMapper->findByUserId($userId);
+    }
+
+    public static function getOrders(int $userId)
+    {
+        $tierFinder=PersistenceFactory::createFinder(Tier::class);
+        return $tierFinder->findByUserId($userId);
+    }
 
     public function __toString(): string
     {
