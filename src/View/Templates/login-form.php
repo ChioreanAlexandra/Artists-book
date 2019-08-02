@@ -16,8 +16,9 @@ use \MyApp\Model\Helper\Form\UserField;
         <div style="color: red">
         </div>
         <input class="btn btn-primary" type="submit" value="Login">
-        <?php if(isset($errors['error']))echo $errors['error'];?>
+
     </form>
+    <label style="color: red"><?php if(isset($errors['error']))echo $errors['error'];?></label><br/>
     <br>
     <a class="btn btn-primary" href="/user/registerPage" role="button">Register</a>
 

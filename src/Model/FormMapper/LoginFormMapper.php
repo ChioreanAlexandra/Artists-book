@@ -15,6 +15,9 @@ class LoginFormMapper
         $this->request=$request;
     }
 
+    /**
+     * @return User|null
+     */
     public function createUserFromLoginForm():?User
     {
         if($this->request->getPost())

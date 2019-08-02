@@ -6,7 +6,14 @@ use Imagick;
 
 class EditorFactory
 {
-    public function createCommand(string $inputFile, string $outputFile, string $type, string $watermark=null):ImageEditor
+    /**
+     * @param string $inputFile
+     * @param string $outputFile
+     * @param string $type
+     * @param string|null $watermark
+     * @return ImageEditor
+     */
+    public function createImageEditor(string $inputFile, string $outputFile, string $type, string $watermark=null):ImageEditor
     {
         switch ($type)
         {
@@ -23,13 +30,20 @@ class EditorFactory
         }
         return new ImageEditor($command.' --watermark='.$watermark);
     }
+
+    /**
+     * Get width of input file
+     * @param string $inputFile
+     * @return int
+     * @throws \ImagickException
+     */
     private function getWidth(string $inputFile)
     {
         /** @var Imagick $image */
         $image=new Imagick($inputFile);
         return $image->getImageWidth();
     }
-
+    /** Get height of input file */
     private function getHeight(string $inputFile)
     {
         /** @var Imagick $image */

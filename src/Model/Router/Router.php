@@ -24,13 +24,19 @@ class Router
         $this->path = $path;
     }
 
+    /**
+     * @param string $controller
+     * @return string
+     */
     public function getControllerClass(string $controller): string
     {
-
         return self::NAMESPACE_CONST . ucfirst($controller) . self::CONTROLLER;
-
     }
 
+    /**
+     * @param string $serverUri
+     * @return string
+     */
     public function getMethod(string $serverUri): string
     {
         preg_match(METHODNAME_REGEX, $serverUri, $match);
@@ -40,6 +46,9 @@ class Router
         return '';
     }
 
+    /**
+     * Gets a Route object and call the method of controller
+     */
     public function getRoute()
     {
         $route = Route::createFromString($this->path);

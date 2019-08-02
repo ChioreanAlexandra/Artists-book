@@ -14,11 +14,17 @@ class TierManagement
 {
     private $savedFile;
 
+
     public function __construct()
     {
         $this->saveImage($_FILES[ImageFields::getImageTag()][ImageFields::getImageTemporaryLocation()]);
     }
 
+    /**
+     * Calls create tier method for each tier size: small, medium, large.
+     * @param int $productId
+     * @return array
+     */
     public function createAllTiersForProduct(int $productId)
     {
         $request = new Request();
@@ -31,6 +37,17 @@ class TierManagement
         return $tiers;
     }
 
+    /**
+     * Process tier and creates tier
+     * @param int $productId
+     * @param string $inputFile
+     * @param string $size
+     * @param float $price
+     * @param string $extension
+     * @return Tier
+     *
+     * TODO:refactor :split in 2 methods
+     */
     public function createTier(int $productId, string $inputFile, string $size, float $price, string $extension = 'jpg')
     {
         $outputFileName = sprintf("%s%s", uniqid(), $extension);
@@ -42,23 +59,37 @@ class TierManagement
         return new Tier($productId, $size, $price, $outputFileNameWM, $outputFileName, null);
     }
 
+    /**
+     * Execute image editor application with given parameters
+     * @param string $inputPath
+     * @param string $outputPath
+     * @param string $type
+     * @param string|null $watermark
+     */
     private function processImage(string $inputPath, string $outputPath, string $type, string $watermark = null)
     {
         $imageEditor = new EditorFactory();
-        $exe=$imageEditor->createCommand($inputPath, $outputPath, $type, $watermark);
+        $exe=$imageEditor->createImageEditor($inputPath, $outputPath, $type, $watermark);
         $exe->execute();
 
     }
 
-    public function createThumbNail(string $thumbnailFileName)
+    /**
+     * Process Thumbnail photo
+     * @param string $thumbnailFileName
+     */
+    public function processThumbnail(string $thumbnailFileName)
     {
         $thumbnailPath = ImageFields::getImagesDirectory() . $thumbnailFileName;
         $this->processImage($this->savedFile, $thumbnailPath, 'thumbnail', ImageFields::WATERMARK_FILE);
     }
 
+    /**
+     * Save uploaded photo.
+     * @param string $inputFile
+     */
     private function saveImage(string $inputFile)
     {
-        var_dump($inputFile);
         $this->savedFile = ImageFields::getImagesDirectory().sprintf("%s.%s", uniqid(), 'jpg');
         move_uploaded_file($inputFile,  $this->savedFile);
 

@@ -12,5 +12,4 @@ class HomePageRenderer extends RendererTemplate
     {
         require_once "".self::HOME_PAGE_HTML_FILE."";
     }
-
 }

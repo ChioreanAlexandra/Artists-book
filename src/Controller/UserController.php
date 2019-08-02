@@ -36,13 +36,18 @@ class UserController
         $this->request = $request;
     }
 
+    /**
+     * Shows login page
+     */
     public function loginPage()
     {
         $renderer = new LoginRenderer();
         $renderer->render();
     }
 
-
+    /**
+     * Creates an user from login form and validate it; Redirect to register or product page.
+     */
     public function login()
     {
         $error = [];
@@ -72,27 +77,32 @@ class UserController
         header('Location:/product/showProducts');
 
     }
-
+    /**
+     *Show register page
+     */
     public function registerPage()
     {
         $renderer = new RegisterRenderer();
         $renderer->render();
     }
 
+    /**
+     * Creates an user from register form; Save user into database; Redirect to homepage, login
+     */
     public function register()
     {
-        $error = [];
         $registerFormMapper = new RegisterFormMapper($this->request);
         $registerUser = $registerFormMapper->createUserFromRegisterForm();
         /** @var UserMapper $userMapper */
         $userMapper = PersistenceFactory::createMapper(User::class);
         $userId = $userMapper->save($registerUser);
         $this->session->setSessionValue(UserField::getId(), $userId);
-        //var_dump($this->session->getSession());
-        //require_once("src/View/Templates/home-page.php");
         header('Location:/product/showProducts');
     }
 
+    /**
+     * Shows account page with user infos
+     */
     public function profile()
     {
         if (!$this->session->getSessionValue(UserField::getId())) {
@@ -115,6 +125,9 @@ class UserController
         header("Location:/product/showProducts");
     }
 
+    /**
+     * Shows user products page
+     */
     public function showProducts()
     {
         if (!$this->session->getSessionValue(UserField::getId())) {
@@ -126,6 +139,9 @@ class UserController
         $renderer->render($products);
     }
 
+    /**
+     * Show users order page
+     */
     public function showOrders()
     {
         if (!$this->session->getSessionValue(UserField::getId())) {

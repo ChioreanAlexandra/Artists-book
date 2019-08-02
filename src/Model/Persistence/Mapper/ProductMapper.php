@@ -8,6 +8,10 @@ use MyApp\Model\DomainObjects\Product;
 
 class ProductMapper extends AbstractMapper
 {
+    /**
+     * @param Product $product
+     * @return int
+     */
     public function save(Product $product): int
     {
         return $this->insert($product);

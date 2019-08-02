@@ -4,7 +4,7 @@
 <div class="content">
     <h1>Profile page</h1>
 
-    <div>
+    <div style="color: black; font-weight: bold">
         <table class="table table-sm">
             <tbody>
             <tr class="table-success">

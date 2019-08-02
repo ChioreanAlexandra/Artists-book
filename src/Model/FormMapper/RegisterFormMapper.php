@@ -17,6 +17,9 @@ class RegisterFormMapper
         $this->request=$request;
     }
 
+    /**
+     * @return User|null
+     */
     public function createUserFromRegisterForm():?User
     {
         if($this->request->getPost())

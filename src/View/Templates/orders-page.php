@@ -2,7 +2,7 @@
 <?php if (!isset($tierList)): return; endif;?>
 <div class="container">
     <h2>Order products Gallery</h2>
-    <div class="row" >
+
         <?php /** @var $tier \MyApp\Model\DomainObjects\Tier */ ?>
         <?php foreach ($tierList as $tier): ?>
             <div class="card" style="margin: 20px">
@@ -13,5 +13,5 @@
             </div>
         <?php endforeach; ?>
 
-    </div>
+
 </div>

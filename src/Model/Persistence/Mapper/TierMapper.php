@@ -14,6 +14,10 @@ class TierMapper extends AbstractMapper
         $this->insert($tier);
     }
 
+    /**
+     * @param Tier $tier
+     * @return int
+     */
     private function insert(Tier $tier): int
     {
         //TODO: transform user to array row then prepare an INSERT ($this->getPdo()) and execute
@@ -31,6 +35,10 @@ class TierMapper extends AbstractMapper
         return $this->getPdo()->lastInsertId();
     }
 
+    /**
+     * @param Tier $tier
+     * @return array
+     */
     private function translateToArray(Tier $tier): array
     {
         // TODO: you may extract this array to a constant in this class, the app config, or you can use reflection

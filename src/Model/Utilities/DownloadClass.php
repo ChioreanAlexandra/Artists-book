@@ -15,6 +15,9 @@ class DownloadClass
         $this->fileName = $fileName;
     }
 
+    /**
+     * sets header needed for downloading
+     */
     public function startDownload()
     {
         if (!file_exists(ImageFields::IMAGES_DIRECTORY . $this->fileName)) {

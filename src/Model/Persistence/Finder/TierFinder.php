@@ -10,6 +10,10 @@ use PDO;
 
 class TierFinder extends AbstractFinder
 {
+    /**
+     * @param array $row
+     * @return Tier
+     */
     private function translateToTier(array $row): Tier
     {
         $tier = new Tier(
@@ -23,6 +27,11 @@ class TierFinder extends AbstractFinder
         return $tier;
     }
 
+    /**
+     * Find tiers of a product
+     * @param int $id
+     * @return array|null
+     */
     public function findByProductId(int $id): ?array
     {
         $sql = "select * from tier where product_id=:id";
@@ -40,6 +49,11 @@ class TierFinder extends AbstractFinder
         return $listOfTiers;
     }
 
+    /**
+     * Find Tiers of a user
+     * @param int $idUser
+     * @return array|null
+     */
     public function findByUserId(int $idUser): ?array
     {
         $sql = "select * from tier where tier.id in (select order_item.tier_id from order_item inner join user on order_item.user_id=user.id where user.id=?)";
@@ -55,6 +69,11 @@ class TierFinder extends AbstractFinder
         }
         return $listOfTiers;
     }
+
+    /**
+     * @param int $id
+     * @return Tier|null
+     */
     public function findById(int $id): ?Tier
     {
         $sql = "select * from tier where tier.id =?";

@@ -13,6 +13,10 @@ class OrderItemMapper extends AbstractMapper
         $this->insert($orderItem);
     }
 
+    /**
+     * @param OrderItem $orderItem
+     * @return array
+     */
     private function translateToArray(OrderItem $orderItem): array
     {
         return [
@@ -21,6 +25,10 @@ class OrderItemMapper extends AbstractMapper
             'tier_id'=>$orderItem->getTierId()
         ];
     }
+
+    /**
+     * @param OrderItem $orderItem
+     */
     private function insert(OrderItem $orderItem)
     {
         //TODO: transform user to array row then prepare an INSERT ($this->getPdo()) and execute

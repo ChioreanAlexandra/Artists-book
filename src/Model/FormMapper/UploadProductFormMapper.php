@@ -23,6 +23,11 @@ class UploadProductFormMapper
         $this->request=$request;
         $this->session=$session;
     }
+
+    /**
+     * @return Product|null
+     * @throws \Exception
+     */
     public function createProductFromUploadForm():?Product
     {
         if(!$this->request->getPost() || !isset($this->session->getSession()[UserField::getId()]))
@@ -30,8 +35,6 @@ class UploadProductFormMapper
             return null;
         }
         $id=$this->session->getSession()[UserField::getId()];
-
-        //$savedFile=$this->saveImage($_FILES[ImageFields::getImageTag()][ImageFields::getImageTemporaryLocation()]);
         return new Product( $id,
             $this->request->getPost()[ProductField::getImageTitleField()],
             $this->request->getPost()[ProductField::getImageDescriptionField()],

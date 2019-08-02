@@ -32,7 +32,9 @@ class ProductController
         $this->request = $request;
     }
 
-    /** @var array */
+    /**
+     * Calls product finder's findBy method to get all products applying filters
+     */
     public function showProducts()
     {
         /** @var ProductFinder $productFinder */
@@ -47,6 +49,10 @@ class ProductController
         $renderer->render($products);
     }
 
+    /**
+     * Shows product page with a given id
+     * @param int $id
+     */
     public function showProduct(int $id)
     {
         /** @var ProductFinder $productFinder */
@@ -57,9 +63,11 @@ class ProductController
         $tags = $tagFinder->findByProductId($id);
         $renderer = new ProductPageRenderer();
         $renderer->render(['product' => $product, 'tag' => $tags]);
-//        ProductPageRenderer::render();
     }
 
+    /**
+     * Shows upload page; In case a user is not logged in is redirected to homepage
+     */
     public function uploadProductPage()
     {
         if (!$this->session->getSessionValue(UserField::getId())) {
@@ -74,7 +82,7 @@ class ProductController
     }
 
     /**
-     * gets user submitted product data, creates product, creates product tags
+     * Gets user submitted product data, creates product, creates product tags
      * creates tiers
      */
     public function uploadProduct()
@@ -89,10 +97,15 @@ class ProductController
         self::uploadProductTag($productId, $product->getTags());
         $tierManagement = new TierManagement();
         self::uploadTiers($tierManagement->createAllTiersForProduct($productId));
-        $tierManagement->createThumbNail($product->getThumbnailPath());
+        $tierManagement->processThumbnail($product->getThumbnailPath());
         header("Location:/");
     }
 
+    /**
+     * Save product's tags for a product with $productId to database
+     * @param int $productId
+     * @param array $tags
+     */
     private function uploadProductTag(int $productId, array $tags)
     {
         $productTag = PersistenceFactory::createMapper(ProductTag::class);
@@ -101,6 +114,10 @@ class ProductController
         }
     }
 
+    /**
+     * Save tiers to database
+     * @param array $tiers
+     */
     private function uploadTiers(array $tiers)
     {
         $tierMapper = PersistenceFactory::createMapper(Tier::class);
@@ -109,9 +126,13 @@ class ProductController
         }
     }
 
+    /**
+     * Save order and start downloading the tier
+     * @param int $idProduct
+     * @throws \Exception
+     */
     public function buyProduct(int $idProduct)
     {
-
         if (!$this->session->getSessionValue(UserField::getId())) {
             $this->session->setSessionValue('lastViewedProductId', $idProduct);
             header("Location:/user/loginPage");
@@ -121,16 +142,22 @@ class ProductController
         $orderMapper = PersistenceFactory::createMapper(OrderItem::class);
         $orderMapper->save(new OrderItem($idTierToByBought, $idUser, new \DateTime('now')));
         $this->startDownload($this->getFileToByDownloaded($idTierToByBought));
-
-        //require_once("src/View/Templates/home-page.php");git +
     }
 
+    /**
+     * @param string $fileName
+     */
     private function startDownload(string $fileName)
     {
         $downloader = new DownloadClass($fileName);
         $downloader->startDownload();
     }
 
+    /**
+     * Get tier with the given id and return its path without watermark
+     * @param int $id
+     * @return string
+     */
     private function getFileToByDownloaded(int $id)
     {
         $tierFinder = PersistenceFactory::createFinder(Tier::class);

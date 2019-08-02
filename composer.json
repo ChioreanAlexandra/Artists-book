@@ -2,7 +2,9 @@
 "name": "artists-book",
 "require": {
         "php":"7.*",
-  "ext-pdo": "*"
+  "ext-pdo": "*",
+  "ext-fileinfo": "*",
+  "ext-imagick": "*"
 },
 "autoload": {
         "psr-4": {

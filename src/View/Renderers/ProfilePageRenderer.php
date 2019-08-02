@@ -8,7 +8,7 @@ class ProfilePageRenderer extends RendererTemplate
 {
     private const PROFILE_PAGE_HTML_FILE = 'src/View/Templates/profile-page.php';
 
-    public function ownRender(array $data = [])
+    public function ownRender(array $data = null)
     {
         require_once "" . self::PROFILE_PAGE_HTML_FILE . "";
     }

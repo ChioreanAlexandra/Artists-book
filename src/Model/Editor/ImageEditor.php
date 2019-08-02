@@ -9,6 +9,10 @@ class ImageEditor
     {
         $this->command=$command;
     }
+
+    /**
+     * Execute image editor commend using system call
+     */
     public function execute()
     {
         system($this->command);

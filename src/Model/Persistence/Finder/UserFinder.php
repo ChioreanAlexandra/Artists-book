@@ -8,12 +8,22 @@ use PDO;
 
 class UserFinder extends AbstractFinder
 {
+    /**
+     * @param array $row
+     * @return User
+     */
     private function translateToUser(array $row): User
     {
         $user = new User($row[UserField::getEmailField()], null, $row[UserField::getNameField()], $row[UserField::getId()]);
         return $user;
     }
 
+    /**
+     * Find user with given array and check password
+     * @param string $email
+     * @param string $password
+     * @return User|null
+     */
     public function findByCredentials(string $email, string $password): ?User
     {
 
@@ -28,6 +38,11 @@ class UserFinder extends AbstractFinder
         }
         return $this->translateToUser($row);
     }
+
+    /**
+     * @param int $id
+     * @return User|null
+     */
     public function findById(int $id): ?User
     {
 

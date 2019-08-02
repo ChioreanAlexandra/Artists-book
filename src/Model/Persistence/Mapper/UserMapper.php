@@ -7,6 +7,10 @@ use MyApp\Model\Helper\Form\UserField;
 
 class UserMapper extends AbstractMapper
 {
+    /**
+     * @param User $user
+     * @return int
+     */
     public function save(User $user): int
     {
         if ($user->getId() === null) {
@@ -15,6 +19,10 @@ class UserMapper extends AbstractMapper
         return $this->update($user);
     }
 
+    /**
+     * @param User $user
+     * @return int
+     */
     private function insert(User $user): int
     {
         //TODO: transform user to array row then prepare an INSERT ($this->getPdo()) and execute
@@ -28,15 +36,16 @@ class UserMapper extends AbstractMapper
         return $this->getPdo()->lastInsertId();
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     private function translateToArray(User $user): array
     {
-        // TODO: you may extract this array to a constant in this class, the app config, or you can use reflection
-        // to obtain all the properties of user dynamically then by convention obtain the columns to map to (next level)
         $row = [
             UserField::getId() => $user->getId(),
             UserField::getNameField() => $user->getName(),
             UserField::getEmailField() => $user->getEmail(),
-            // TODO: handle the rest of fields
         ];
 
         // write password only when is set/user is a new entity (on load it is never read into the property)
@@ -47,14 +56,4 @@ class UserMapper extends AbstractMapper
         return $row;
     }
 
-    private function update(User $user): int
-    {
-        //TODO: transform user to array row then prepare an UPDATE ($this->getPdo()) and execute
-        $row = $this->translateToArray($user);
-        $sql = "";
-        $statement = $this->getPdo()->prepare($sql);
-        // ... bind parameters from $row
-        $statement->execute();
-        return 0;
-    }
 }
