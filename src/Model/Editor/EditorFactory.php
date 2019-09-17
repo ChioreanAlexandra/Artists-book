@@ -22,7 +22,7 @@ class EditorFactory
             case 'thumbnail': $width=100; $height=100; break;
             default:$width=$this->getWidth($inputFile); $height=$this->getHeight($inputFile); break;
         }
-        $command='php /var/www/artists-book/imageEditorProject/my_command_line_tool.php --input-file='.$inputFile
+        $command='php /var/www/artists-book/Artists-book/imageEditorProject/my_command_line_tool.php --input-file='.$inputFile
             .' --output-file='.$outputFile.' --width='.$width.' --height='.$height;
         if(!$watermark)
         {

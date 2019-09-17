@@ -43,7 +43,6 @@ class PersistenceFactory
         preg_match_all('/(?<path>\w+\\\)/', AbstractMapper::class, $match);
         $mapperClassPath = implode('', $match['path']);
         $mapperClassName = sprintf('%s%sMapper', $mapperClassPath, end($path));
-        var_dump($mapperClassName);
         return $mapperClassName;
     }
 
