@@ -1,8 +1,8 @@
 <?php
 
-namespace MyApp\Model\Exception;
+namespace MyApp\Model\Exceptions;
 
-class EmptyFieldException
+class EmptyFieldException extends \Exception
 {
     private const EMPTY_FIELD_EXCEPTION_MESSAGE='All fields ar mandatory';
 
@@ -11,8 +11,4 @@ class EmptyFieldException
         return new self(sprintf(self::EMPTY_FIELD_EXCEPTION_MESSAGE));
     }
 
-    public function getMessage():string
-    {
-        return self::EMPTY_FIELD_EXCEPTION_MESSAGE;
-    }
 }
