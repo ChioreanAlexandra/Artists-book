@@ -51,7 +51,10 @@ class UserController
     public function login()
     {
         $error = [];
-
+        $loginValidator = new LoginFormValidator($this->request->getPost());
+        if (!empty($loginValidator->validate())) {
+            var_dump($loginValidator->validate());
+        }
         $loginFormMapper = new LoginFormMapper($this->request);
         $loginUser = $loginFormMapper->createUserFromLoginForm();
 
@@ -77,6 +80,7 @@ class UserController
         header('Location:/product/showProducts');
 
     }
+
     /**
      *Show register page
      */
@@ -113,7 +117,7 @@ class UserController
         /** @var User $user */
         $user = $userFinder->findById($userId);
         $renderer = new ProfilePageRenderer();
-        $renderer->render(['user'=>$user]);
+        $renderer->render(['user' => $user]);
     }
 
     public function logout()
@@ -134,7 +138,7 @@ class UserController
             header("Location:/product/showProducts");
         }
         $userId = $this->session->getSessionValue(UserField::getId());
-        $products=User::getProducts($userId);
+        $products = User::getProducts($userId);
         $renderer = new UserProductsRenderer();
         $renderer->render($products);
     }
@@ -148,7 +152,7 @@ class UserController
             header("Location:/product/showProducts");
         }
         $userId = $this->session->getSessionValue(UserField::getId());
-        $orders=User::getOrders($userId);
+        $orders = User::getOrders($userId);
         $renderer = new OrdersPageRenderer();
         $renderer->render($orders);
     }
