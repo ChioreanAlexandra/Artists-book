@@ -2,8 +2,9 @@
 
 namespace MyApp\Model\Validation\FormValidators;
 
-use MyApp\Model\Exception\EmailException;
-use MyApp\Model\Exception\EmptyFieldException;
+use MyApp\Model\Exceptions\EmailException;
+use MyApp\Model\Exceptions\EmptyFieldException;
+use MyApp\Model\Validation\Rules\EmptyValidator;
 use MyApp\Model\Validation\Rules\EmailValidator;
 use MyApp\Model\Validation\Rules\RulesCommand;
 
@@ -13,7 +14,7 @@ class LoginFormValidator
     private $userDetails;
     /** @var RulesCommand[] */
     private $commands;
-    private const EMAIL='username';
+    const EMAIL='email';
 
     public function __construct(array $userDetails)
     {
@@ -32,22 +33,23 @@ class LoginFormValidator
             $rule->executeRule();
         }
     }
+
     public function validate():array
     {
         $errors=[];
         try
         {
+            $emptyValidator=new EmptyValidator($this->userDetails);
+            $this->addToCommandsList($emptyValidator);
             $emailValidator=new EmailValidator($this->userDetails[self::EMAIL]);
             $this->addToCommandsList($emailValidator);
-            $emptyValidator=new EmailValidator($this->userDetails);
-            $this->addToCommandsList($emptyValidator);
             $this->runCommands();
         }
-        catch (EmptyFieldException $exception)
+        catch (EmailException $exception)
         {
             $errors[]=$exception->getMessage();
         }
-        catch (EmailException $exception)
+        catch (EmptyFieldException $exception)
         {
             $errors[]=$exception->getMessage();
         }

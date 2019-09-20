@@ -3,7 +3,7 @@
 namespace MyApp\Model\Validation\Rules;
 
 use MyApp\Model\DomainObjects\User;
-use MyApp\Model\Exception\EmailException;
+use MyApp\Model\Exceptions\EmailException;
 use \MyApp\Model\Validation\Rules\RulesCommand;
 
 class EmailValidator implements RulesCommand
@@ -20,7 +20,7 @@ class EmailValidator implements RulesCommand
     {
         if(!filter_var($this->email,FILTER_VALIDATE_EMAIL))
         {
-            //throw EmailException::emailException();
+            throw EmailException::emailException();
         }
     }
 }
