@@ -16,6 +16,7 @@ use MyApp\Model\Helper\Form\UserField;
 use MyApp\Model\Http\Session;
 use MyApp\Model\Validation\FormValidators\LoginFormValidator;
 use MyApp\Model\Http\Request;
+use MyApp\Model\Validation\FormValidators\RegisterFormValidator;
 use MyApp\View\Renderers\LoginRenderer;
 use MyApp\View\Renderers\OrdersPageRenderer;
 use MyApp\View\Renderers\ProfilePageRenderer;
@@ -23,7 +24,6 @@ use MyApp\View\Renderers\RegisterRenderer;
 use MyApp\Model\Persistence\Finder\AbstractFinder;
 use MyApp\View\Renderers\UploadProductRenderer;
 use MyApp\View\Renderers\UserProductsRenderer;
-
 
 class UserController
 {
@@ -52,8 +52,11 @@ class UserController
     {
         $error = [];
         $loginValidator = new LoginFormValidator($this->request->getPost());
-        if (!empty($loginValidator->validate())) {
-            var_dump($loginValidator->validate());
+        $error=$loginValidator->validate();
+        if (!empty($error)) {
+            $renderer = new LoginRenderer();
+            $renderer->render($error);
+            return;
         }
         $loginFormMapper = new LoginFormMapper($this->request);
         $loginUser = $loginFormMapper->createUserFromLoginForm();
@@ -95,6 +98,16 @@ class UserController
      */
     public function register()
     {
+        $error = [];
+        $registerValidator=new RegisterFormValidator($this->request->getPost());
+
+        $error=$registerValidator->validate();
+        if(!empty($error))
+        {
+            $renderer = new RegisterRenderer();
+            $renderer->render($error);
+            return;
+        }
         $registerFormMapper = new RegisterFormMapper($this->request);
         $registerUser = $registerFormMapper->createUserFromRegisterForm();
         /** @var UserMapper $userMapper */
