@@ -4,7 +4,9 @@
         "php":"7.*",
   "ext-pdo": "*",
   "ext-fileinfo": "*",
-  "ext-imagick": "*"
+  "ext-imagick": "*",
+  "ext-http": "*",
+  "ext-mbstring": "*"
 },
 "autoload": {
         "psr-4": {
