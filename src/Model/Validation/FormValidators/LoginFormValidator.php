@@ -21,7 +21,7 @@ class LoginFormValidator
         $this->userDetails=$userDetails;
     }
 
-    public function addToCommandsList(RulesCommand $command)
+    private function addToCommandsList(RulesCommand $command)
     {
         $this->commands[]=$command;
     }
@@ -47,11 +47,11 @@ class LoginFormValidator
         }
         catch (EmailException $exception)
         {
-            $errors[]=$exception->getMessage();
+            $errors['email']=$exception->getMessage();
         }
         catch (EmptyFieldException $exception)
         {
-            $errors[]=$exception->getMessage();
+            $errors['emptyFields']=$exception->getMessage();
         }
         finally
         {
